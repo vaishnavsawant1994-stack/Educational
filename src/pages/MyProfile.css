@@ -1,0 +1,335 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profile-page {
+  padding: 25px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  color: #1e293b;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Header */
+
+.profile-header {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #2563eb;
+  object-fit: cover;
+}
+
+.profile-info h2 {
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.profile-info p {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+
+.edit-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background: #1d4ed8;
+}
+
+.reset-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.reset-btn:hover {
+  background: #dc2626;
+}
+
+/* Statistics */
+
+.stats {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  color: #2563eb;
+  margin-bottom: 8px;
+  font-size: 34px;
+}
+
+.card p {
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Information */
+
+.info-section {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.info-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.info-card h3 {
+  margin-bottom: 15px;
+  color: #111827;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+
+.row span {
+  color: #64748b;
+}
+
+.row strong {
+  color: #111827;
+}
+
+/* Activity */
+
+.activity-card {
+  margin-top: 25px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.activity-card h3 {
+  margin-bottom: 15px;
+}
+
+.activity {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Modal */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 650px;
+  border-radius: 15px;
+  padding: 25px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: none;
+}
+
+/* Save / Cancel */
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn {
+  flex: 1;
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.save-btn:hover {
+  background: #15803d;
+}
+
+.cancel-btn {
+  flex: 1;
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-btn:hover {
+  background: #b91c1c;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .info-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 15px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .edit-btn,
+  .reset-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .page-title {
+    font-size: 26px;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    padding: 20px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .info-card {
+    padding: 15px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+}
