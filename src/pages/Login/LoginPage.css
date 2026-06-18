@@ -1,0 +1,449 @@
+/* ==========================
+RESET
+========================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,
+body,
+#root{
+width:100%;
+height:100%;
+font-family:"Poppins",sans-serif;
+overflow:hidden;
+}
+
+/* ==========================
+PAGE
+========================== */
+
+.login-page{
+width:100vw;
+height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
+background:
+linear-gradient(
+rgba(245,242,255,.78),
+rgba(245,242,255,.82)
+),
+
+url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1920&q=80");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+/* ==========================
+CENTER
+========================== */
+
+.login-container{
+width:100%;
+max-width:650px;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+gap:22px;
+}
+
+/* ==========================
+TEACHER LOGIN
+========================== */
+
+.login-left{
+display:flex;
+justify-content:center;
+}
+
+.login-badge{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:18px 34px;
+
+border-radius:60px;
+
+background:
+rgba(
+255,
+255,
+255,
+0.60
+);
+
+backdrop-filter:
+blur(14px);
+
+color:#5c37ff;
+
+font-size:20px;
+
+font-weight:800;
+
+box-shadow:
+0 10px 30px
+rgba(
+88,
+70,
+255,
+0.08
+);
+}
+
+.login-badge svg{
+font-size:22px;
+}
+
+/* ==========================
+FORM CARD
+========================== */
+
+.login-form{
+
+width:100%;
+
+max-width:560px;
+
+padding:48px;
+
+border-radius:34px;
+
+background:
+rgba(
+255,
+255,
+255,
+0.93
+);
+
+backdrop-filter:
+blur(18px);
+
+box-shadow:
+0 20px 80px
+rgba(
+67,
+50,
+180,
+0.14
+);
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+}
+
+/* ==========================
+TITLE
+========================== */
+
+.login-form h2{
+
+text-align:center;
+
+font-size:68px;
+
+font-weight:900;
+
+color:#041a61;
+
+margin-bottom:10px;
+}
+
+/* ==========================
+INPUT
+========================== */
+
+.input-group{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+}
+
+.input-group label{
+
+text-align:center;
+
+font-size:18px;
+
+font-weight:800;
+
+color:#081d66;
+}
+
+/* EMAIL FIELD */
+
+.input-icon,
+.password-box{
+
+position:relative;
+
+display:flex;
+
+align-items:center;
+}
+
+.input-icon svg,
+.left-icon{
+
+position:absolute;
+
+left:22px;
+
+font-size:22px;
+
+color:#8e93b3;
+
+z-index:2;
+}
+
+.input-group input,
+.password-box input{
+
+width:100%;
+
+height:70px;
+
+border:
+1px solid
+#dfe2ee;
+
+border-radius:18px;
+
+padding-left:64px;
+
+padding-right:64px;
+
+font-size:18px;
+
+outline:none;
+
+background:white;
+
+/* FIX TEXT COLOR */
+
+color:#081d66;
+}
+
+.input-group input::placeholder,
+.password-box input::placeholder{
+
+color:#8f95ad;
+
+opacity:1;
+}
+
+.input-group input:focus,
+.password-box input:focus{
+
+border-color:#6545ff;
+
+box-shadow:
+0 0 0 4px
+rgba(
+101,
+69,
+255,
+0.08
+);
+}
+
+/* AUTOFILL */
+
+input:-webkit-autofill{
+-webkit-text-fill-color:#081d66;
+transition:background-color 9999s;
+}
+
+/* ==========================
+PASSWORD
+========================== */
+
+.eye-btn{
+
+position:absolute;
+
+right:22px;
+
+top:50%;
+
+transform:
+translateY(-50%);
+
+border:none;
+
+background:none;
+
+cursor:pointer;
+
+font-size:22px;
+
+color:#9094b0;
+}
+
+.eye-btn:hover{
+color:#6545ff;
+}
+
+/* ==========================
+BUTTON
+========================== */
+
+.login-btn{
+
+height:72px;
+
+border:none;
+
+border-radius:20px;
+
+background:
+
+linear-gradient(
+135deg,
+#6b46ff,
+#5330ff
+);
+
+color:white;
+
+font-size:30px;
+
+font-weight:800;
+
+cursor:pointer;
+
+transition:.3s;
+}
+
+.login-btn:hover{
+
+transform:
+translateY(-2px);
+
+box-shadow:
+0 16px 40px
+rgba(
+101,
+69,
+255,
+0.30
+);
+}
+
+/* ==========================
+REGISTER
+========================== */
+
+.register-link{
+
+text-align:center;
+
+font-size:18px;
+
+color:#6f7895;
+}
+
+.register-link a{
+
+margin-left:8px;
+
+text-decoration:none;
+
+font-weight:800;
+
+color:#5938ff;
+}
+
+/* ==========================
+TABLET
+========================== */
+
+@media(max-width:768px){
+
+.login-form{
+padding:34px;
+}
+
+.login-form h2{
+font-size:52px;
+}
+
+.login-btn{
+height:64px;
+font-size:24px;
+}
+
+}
+
+/* ==========================
+MOBILE
+========================== */
+
+@media(max-width:480px){
+
+.login-page{
+padding:16px;
+}
+
+.login-badge{
+
+font-size:18px;
+
+padding:14px 24px;
+}
+
+.login-form{
+
+padding:26px;
+
+border-radius:24px;
+}
+
+.login-form h2{
+
+font-size:42px;
+}
+
+.input-group input,
+.password-box input{
+
+height:58px;
+
+font-size:16px;
+
+padding-left:56px;
+}
+
+.login-btn{
+
+height:58px;
+
+font-size:22px;
+}
+
+}
