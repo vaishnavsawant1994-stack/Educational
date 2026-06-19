@@ -12,62 +12,79 @@ html,
 body,
 #root{
 width:100%;
-height:100%;
+min-height:100vh;
 font-family:"Poppins",sans-serif;
-overflow:hidden;
 }
 
 /* ==========================
-PAGE
+FULL SCREEN PAGE
 ========================== */
 
 .login-page{
-width:100vw;
-height:100vh;
+
+position:relative;
+
+width:100%;
+min-height:100vh;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
-padding:20px;
+padding:40px;
 
 background:
 linear-gradient(
-rgba(245,242,255,.78),
-rgba(245,242,255,.82)
+rgba(247,245,255,.82),
+rgba(247,245,255,.84)
 ),
 
 url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1920&q=80");
 
 background-size:cover;
+
 background-position:center;
+
 background-repeat:no-repeat;
+
+overflow:auto;
+
 }
 
 /* ==========================
-CENTER
+CENTER CONTENT
 ========================== */
 
 .login-container{
+
 width:100%;
-max-width:650px;
+
+max-width:620px;
 
 display:flex;
+
 flex-direction:column;
 
 align-items:center;
+
 justify-content:center;
 
-gap:22px;
+gap:28px;
+
+margin:auto;
+
 }
 
 /* ==========================
-TEACHER LOGIN
+TOP BADGE
 ========================== */
 
 .login-left{
 display:flex;
 justify-content:center;
+width:100%;
 }
 
 .login-badge{
@@ -76,37 +93,40 @@ display:flex;
 
 align-items:center;
 
+justify-content:center;
+
 gap:14px;
 
 padding:18px 34px;
 
-border-radius:60px;
+border-radius:70px;
 
 background:
 rgba(
 255,
 255,
 255,
-0.60
+0.65
 );
 
 backdrop-filter:
-blur(14px);
+blur(20px);
 
-color:#5c37ff;
+box-shadow:
+0 12px 35px
+rgba(
+72,
+55,
+180,
+0.10
+);
 
-font-size:20px;
+color:#5a3cff;
+
+font-size:22px;
 
 font-weight:800;
 
-box-shadow:
-0 10px 30px
-rgba(
-88,
-70,
-255,
-0.08
-);
 }
 
 .login-badge svg{
@@ -114,44 +134,45 @@ font-size:22px;
 }
 
 /* ==========================
-FORM CARD
+FORM
 ========================== */
 
 .login-form{
 
 width:100%;
 
-max-width:560px;
+max-width:540px;
 
-padding:48px;
-
-border-radius:34px;
+padding:50px;
 
 background:
 rgba(
 255,
 255,
 255,
-0.93
+0.94
 );
 
 backdrop-filter:
-blur(18px);
+blur(20px);
+
+border-radius:34px;
 
 box-shadow:
-0 20px 80px
+0 28px 80px
 rgba(
-67,
-50,
-180,
-0.14
+63,
+56,
+145,
+0.15
 );
 
 display:flex;
 
 flex-direction:column;
 
-gap:20px;
+gap:22px;
+
 }
 
 /* ==========================
@@ -162,17 +183,20 @@ TITLE
 
 text-align:center;
 
-font-size:68px;
+font-size:64px;
+
+line-height:1;
 
 font-weight:900;
 
-color:#041a61;
+color:#071a63;
 
-margin-bottom:10px;
+margin-bottom:12px;
+
 }
 
 /* ==========================
-INPUT
+INPUTS
 ========================== */
 
 .input-group{
@@ -181,21 +205,23 @@ display:flex;
 
 flex-direction:column;
 
-gap:10px;
+gap:12px;
+
 }
 
 .input-group label{
 
-text-align:center;
-
 font-size:18px;
 
-font-weight:800;
+font-weight:700;
 
-color:#081d66;
+color:#071a63;
+
 }
 
-/* EMAIL FIELD */
+/* ==========================
+INPUT WRAPPER
+========================== */
 
 .input-icon,
 .password-box{
@@ -205,6 +231,7 @@ position:relative;
 display:flex;
 
 align-items:center;
+
 }
 
 .input-icon svg,
@@ -214,73 +241,73 @@ position:absolute;
 
 left:22px;
 
-font-size:22px;
+font-size:20px;
 
-color:#8e93b3;
+color:#9196b3;
 
-z-index:2;
+z-index:10;
+
 }
+
+/* ==========================
+FIELDS
+========================== */
 
 .input-group input,
 .password-box input{
 
 width:100%;
 
-height:70px;
+height:68px;
+
+padding-left:62px;
+
+padding-right:62px;
 
 border:
+
 1px solid
-#dfe2ee;
+#d9deee;
 
 border-radius:18px;
 
-padding-left:64px;
+background:white;
 
-padding-right:64px;
+font-size:17px;
 
-font-size:18px;
+color:#091c65;
 
 outline:none;
 
-background:white;
+transition:.25s;
 
-/* FIX TEXT COLOR */
-
-color:#081d66;
 }
 
 .input-group input::placeholder,
 .password-box input::placeholder{
 
-color:#8f95ad;
+color:#9da2b9;
 
-opacity:1;
 }
 
 .input-group input:focus,
 .password-box input:focus{
 
-border-color:#6545ff;
+border-color:#6444ff;
 
 box-shadow:
-0 0 0 4px
+0 0 0 5px
 rgba(
-101,
-69,
+100,
+68,
 255,
 0.08
 );
-}
 
-/* AUTOFILL */
-
-input:-webkit-autofill{
--webkit-text-fill-color:#081d66;
-transition:background-color 9999s;
 }
 
 /* ==========================
-PASSWORD
+PASSWORD ICON
 ========================== */
 
 .eye-btn{
@@ -291,8 +318,7 @@ right:22px;
 
 top:50%;
 
-transform:
-translateY(-50%);
+transform:translateY(-50%);
 
 border:none;
 
@@ -300,9 +326,10 @@ background:none;
 
 cursor:pointer;
 
-font-size:22px;
+font-size:20px;
 
-color:#9094b0;
+color:#9095b5;
+
 }
 
 .eye-btn:hover{
@@ -310,73 +337,73 @@ color:#6545ff;
 }
 
 /* ==========================
-BUTTON
+LOGIN BUTTON
 ========================== */
 
 .login-btn{
 
-height:72px;
+height:68px;
 
 border:none;
 
 border-radius:20px;
 
 background:
-
 linear-gradient(
 135deg,
-#6b46ff,
-#5330ff
+#7047ff,
+#5531ff
 );
 
 color:white;
 
-font-size:30px;
+font-size:28px;
 
 font-weight:800;
 
 cursor:pointer;
 
-transition:.3s;
+transition:.25s;
+
 }
 
 .login-btn:hover{
 
-transform:
-translateY(-2px);
+transform:translateY(-3px);
 
 box-shadow:
-0 16px 40px
+0 18px 40px
 rgba(
-101,
-69,
+97,
+67,
 255,
-0.30
+0.28
 );
+
 }
 
 /* ==========================
-REGISTER
+BOTTOM LINK
 ========================== */
 
 .register-link{
 
 text-align:center;
 
-font-size:18px;
+font-size:17px;
 
-color:#6f7895;
+color:#707895;
+
 }
 
 .register-link a{
-
-margin-left:8px;
 
 text-decoration:none;
 
 font-weight:800;
 
-color:#5938ff;
+color:#5c3fff;
+
 }
 
 /* ==========================
@@ -386,16 +413,15 @@ TABLET
 @media(max-width:768px){
 
 .login-form{
-padding:34px;
+
+padding:38px;
+
 }
 
 .login-form h2{
-font-size:52px;
-}
 
-.login-btn{
-height:64px;
-font-size:24px;
+font-size:52px;
+
 }
 
 }
@@ -407,26 +433,31 @@ MOBILE
 @media(max-width:480px){
 
 .login-page{
-padding:16px;
+
+padding:20px;
+
+}
+
+.login-form{
+
+padding:28px;
+
+border-radius:24px;
+
+}
+
+.login-form h2{
+
+font-size:42px;
+
 }
 
 .login-badge{
 
 font-size:18px;
 
-padding:14px 24px;
-}
+padding:14px 22px;
 
-.login-form{
-
-padding:26px;
-
-border-radius:24px;
-}
-
-.login-form h2{
-
-font-size:42px;
 }
 
 .input-group input,
@@ -436,7 +467,6 @@ height:58px;
 
 font-size:16px;
 
-padding-left:56px;
 }
 
 .login-btn{
@@ -444,6 +474,7 @@ padding-left:56px;
 height:58px;
 
 font-size:22px;
+
 }
 
 }

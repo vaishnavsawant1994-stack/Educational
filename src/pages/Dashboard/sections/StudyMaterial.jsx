@@ -1,79 +1,108 @@
+import React, { useEffect, useState } from "react";
 import "./StudyMaterial.css";
-import { useState } from "react";
 
-import MaterialStats from "../../../Components/studymaterial/MaterialStats";
+import SearchBox from "../../../Components/studymaterial/SearchBox";
 import MaterialTable from "../../../Components/studymaterial/MaterialTable";
 import Pagination from "../../../Components/studymaterial/Pagination";
-import SearchBox from "../../../Components/studymaterial/SearchBox";
+import ClassWisePanel from "../../../Components/studymaterial/ClassWisePanel";
 import SubjectWisePanel from "../../../Components/studymaterial/SubjectWisePanel";
 import UploadModal from "../../../Components/studymaterial/UploadModal";
+import DeleteModal from "../../../Components/studymaterial/DeleteModal";
+import BottomWidgets from "../../../Components/studymaterial/BottomWidgets";
 
-const StudyMaterial = () => {
+export default function StudyMaterial() {
 
-const [materials] = useState([]);
+const [materials,setMaterials]=useState([]);
 
-const [search,setSearch] =
-useState("");
+const [showUpload,setShowUpload]=useState(false);
 
-const [openUpload,setOpenUpload] =
-useState(false);
+const [showDelete,setShowDelete]=useState(false);
 
-const deleteMaterials=()=>{
 
-alert(
-"Delete Study Material clicked"
+/* LOAD */
+
+const loadMaterials=()=>{
+
+const data=
+JSON.parse(
+localStorage.getItem(
+"studyMaterials"
+)
+)||[];
+
+setMaterials(data);
+
+};
+
+
+/* AUTO REFRESH */
+
+useEffect(()=>{
+
+loadMaterials();
+
+const refresh=()=>{
+
+loadMaterials();
+
+};
+
+window.addEventListener(
+"materialUploaded",
+refresh
+);
+
+window.addEventListener(
+"materialDeleted",
+refresh
+);
+
+return()=>{
+
+window.removeEventListener(
+"materialUploaded",
+refresh
+);
+
+window.removeEventListener(
+"materialDeleted",
+refresh
 );
 
 };
+
+},[]);
+
+
 
 return(
 
 <div className="study-page">
 
-{/* HEADER */}
-
-<div className="study-header">
+<header className="study-header">
 
 <div>
 
-<h1 className="study-title">
-
+<h1>
 Study Material
-
 </h1>
 
-<p className="study-subtitle">
-
+<p>
 Manage and organize all uploaded study materials
-
 </p>
 
 </div>
 
+
 <div className="header-actions">
 
-<input
-className="header-search"
-
-value={search}
-
-placeholder=
-"Search materials..."
-
-onChange={(e)=>
-setSearch(
-e.target.value
-)
-}
-/>
+<SearchBox />
 
 <button
 className="upload-btn"
 
 onClick={()=>
-setOpenUpload(
-true
-)
+setShowUpload(true)
 }
 >
 
@@ -81,11 +110,12 @@ Upload Study Material
 
 </button>
 
+
 <button
 className="delete-btn"
 
-onClick={
-deleteMaterials
+onClick={()=>
+setShowDelete(true)
 }
 >
 
@@ -95,43 +125,92 @@ Delete Study Material
 
 </div>
 
+</header>
+
+
+<section className="stats-grid">
+
+<div className="stats-card">
+<h3>{materials.length}</h3>
+<p>Total Materials</p>
 </div>
 
-{/* SEARCH */}
-
-<SearchBox
-value={search}
-onChange={
-setSearch
+<div className="stats-card">
+<h3>
+{
+materials.slice(
+0,
+5
+).length
 }
-/>
+</h3>
 
-{/* STATS */}
+<p>
+Recent Uploads
+</p>
 
-<MaterialStats
-total={1248}
-uploads={156}
-classes={12}
-subjects={45}
-downloads={8732}
-/>
+</div>
 
-{/* CONTENT */}
+<div className="stats-card">
+<h3>12</h3>
+<p>Total Classes</p>
+</div>
 
-<div className="study-content">
+<div className="stats-card">
+<h3>45</h3>
+<p>Total Subjects</p>
+</div>
 
-<div className="table-section">
+<div className="stats-card">
+<h3>
+{
+materials.reduce(
+(
+a,
+b
+)=>
+a+
+(
+b.downloads||
+0
+),
+0
+)
+}
+</h3>
+
+<p>
+Downloads
+</p>
+
+</div>
+
+</section>
+
+
+
+<div className="study-layout">
+
+<div className="left-content">
 
 <MaterialTable
-data={materials}
-search={search}
+
+materials={materials}
+
+refresh={
+loadMaterials
+}
+
 />
 
 <Pagination/>
 
 </div>
 
-<div className="side-section">
+
+<div className="right-content">
+
+<ClassWisePanel/>
 
 <SubjectWisePanel/>
 
@@ -139,42 +218,53 @@ search={search}
 
 </div>
 
-{/* MODAL */}
+
+<BottomWidgets/>
+
 
 {
-
-openUpload && (
-
-<div
-className="popup-overlay"
->
-
-<div
-className="popup-window"
->
+showUpload&&(
 
 <UploadModal
 
-onClose={()=>
-setOpenUpload(
-false
-)
+close={()=>
+setShowUpload(false)
+}
+
+refresh={
+loadMaterials
 }
 
 />
 
-</div>
+)
+}
 
-</div>
+
+{
+showDelete&&(
+
+<DeleteModal
+
+materials={
+materials
+}
+
+close={()=>
+setShowDelete(false)
+}
+
+refresh={
+loadMaterials
+}
+
+/>
 
 )
-
 }
 
 </div>
 
 );
 
-};
-
-export default StudyMaterial;
+}

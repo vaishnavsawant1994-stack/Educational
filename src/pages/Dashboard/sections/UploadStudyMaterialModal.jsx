@@ -1,276 +1,163 @@
 import "./UploadStudyMaterialModal.css";
-
 import { useState } from "react";
 
-import {
-FaUpload,
-FaFilePdf,
-FaFilePowerpoint,
-FaFileExcel,
-FaFileAlt,
-} from "react-icons/fa";
-
-const UploadStudyMaterialModal = ({
+export default function UploadStudyMaterialModal({
 onClose,
-}) => {
+}) {
 
-const [file,setFile]=
-useState(null);
+const [form,setForm]=useState({
+title:"",
+class:"",
+subject:"",
+type:"PDF",
+});
 
-const [drag,setDrag]=
-useState(false);
+const upload=()=>{
 
-const [material,setMaterial]=
-useState("pdf");
+if(
+!form.title ||
+!form.class ||
+!form.subject
+){
+alert("Fill all fields");
+return;
+}
 
-const [uploadedMaterials,setUploadedMaterials]=
-useState(
-
+const old=
 JSON.parse(
 localStorage.getItem(
 "studyMaterials"
 )
+)||[];
 
-)||[]
-
-);
-
-const chooseFile=(e)=>{
-
-const selected=
-e.target.files[0];
-
-if(selected){
-
-setFile(
-selected
-);
-
-}
-
-};
-
-const dropFile=(e)=>{
-
-e.preventDefault();
-
-setDrag(false);
-
-const selected=
-e.dataTransfer.files[0];
-
-if(selected){
-
-setFile(
-selected
-);
-
-}
-
-};
-
-const uploadMaterial=()=>{
-
-if(!file){
-
-alert(
-"Select file first"
-);
-
-return;
-
-}
-
-const newMaterial={
-
+const newItem={
 id:Date.now(),
 
-name:file.name,
+title:form.title,
 
-size:
-(
-file.size/
-1024/
-1024
-).toFixed(2),
+class:form.class,
 
-type:
-material,
+subject:form.subject,
 
-date:
+type:form.type,
+
+uploaded:
 new Date()
 .toLocaleDateString(),
 
+downloads:0,
 };
 
-const updated=[
-
-newMaterial,
-
-...uploadedMaterials,
-
-];
-
-setUploadedMaterials(
-updated
-);
-
 localStorage.setItem(
-
 "studyMaterials",
 
-JSON.stringify(
-updated
-)
-
+JSON.stringify([
+newItem,
+...old,
+])
 );
 
 alert(
-"Material Uploaded Successfully"
+"Material Uploaded"
 );
 
-setFile(
-null
-);
+onClose();
 
-};
-
-const removeMaterial=(id)=>{
-
-const updated=
-
-uploadedMaterials.filter(
-item=>
-item.id!==id
-);
-
-setUploadedMaterials(
-updated
-);
-
-localStorage.setItem(
-
-"studyMaterials",
-
-JSON.stringify(
-updated
+window.dispatchEvent(
+new Event(
+"materialUploaded"
 )
-
 );
 
 };
 
 return(
 
-<div className="upload-modal">
+<div
+className="upload-overlay"
+>
+
+<div
+className="upload-modal"
+>
 
 <button
 className="close-btn"
 onClick={onClose}
 >
-
 ✕
-
 </button>
 
-<div className="upload-header">
-
-<div className="upload-icon">
-
-<FaUpload/>
-
-</div>
-
-<div>
-
-<h1>
-
+<h2>
 Upload Study Material
-
-</h1>
-
-<p>
-
-Upload notes, presentations, documents or any study material
-
-</p>
-
-</div>
-
-</div>
-
-<div className="upload-body">
-
-<div className="upload-left">
-
-<div className="form-group">
-
-<label>
-
-Title *
-
-</label>
+</h2>
 
 <input
-placeholder=
-"Enter material title"
+placeholder="Material Title"
+
+onChange={(e)=>
+
+setForm({
+...form,
+title:
+e.target.value,
+})
+
+}
 />
 
-</div>
+<select
+onChange={(e)=>
 
-<div className="form-group">
+setForm({
+...form,
+class:
+e.target.value,
+})
 
-<label>
-
-Description
-
-</label>
-
-<textarea
-placeholder=
-"Enter description"
-/>
-
-</div>
-
-<div className="form-group">
-
-<label>
-
-Select Class *
-
-</label>
-
-<select>
+}
+>
 
 <option>
-Select class
+Select Class
 </option>
 
 <option>
-Class 10A
+Class 9
 </option>
 
 <option>
-Class 10B
+Class 10
+</option>
+
+<option>
+Class 11
+</option>
+
+<option>
+Class 12
 </option>
 
 </select>
 
-</div>
+<select
+onChange={(e)=>
 
-<div className="form-group">
+setForm({
+...form,
+subject:
+e.target.value,
+})
 
-<label>
-
-Subject
-
-</label>
-
-<select>
+}
+>
 
 <option>
-Select subject
+Select Subject
+</option>
+
+<option>
+Physics
 </option>
 
 <option>
@@ -278,424 +165,66 @@ Math
 </option>
 
 <option>
-Science
+Chemistry
+</option>
+
+<option>
+Biology
 </option>
 
 </select>
 
-</div>
+<select
+onChange={(e)=>
 
-<label>
+setForm({
+...form,
+type:
+e.target.value,
+})
 
-Material Type *
-
-</label>
-
-<div className="material-grid">
-
-<div
-className={`material ${
-material==="pdf"
-?
-"active"
-:
-""
-}`}
-
-onClick={()=>
-setMaterial(
-"pdf"
-)
 }
 >
 
-<FaFilePdf/>
-
-<span>
-
+<option>
 PDF
+</option>
 
-</span>
+<option>
+DOCX
+</option>
 
-</div>
-
-<div
-className={`material ${
-material==="ppt"
-?
-"active"
-:
-""
-}`}
-
-onClick={()=>
-setMaterial(
-"ppt"
-)
-}
->
-
-<FaFilePowerpoint/>
-
-<span>
-
+<option>
 PPT
+</option>
 
-</span>
+<option>
+XLSX
+</option>
 
-</div>
-
-<div
-className={`material ${
-material==="excel"
-?
-"active"
-:
-""
-}`}
-
-onClick={()=>
-setMaterial(
-"excel"
-)
-}
->
-
-<FaFileExcel/>
-
-<span>
-
-Excel
-
-</span>
-
-</div>
-
-<div
-className={`material ${
-material==="text"
-?
-"active"
-:
-""
-}`}
-
-onClick={()=>
-setMaterial(
-"text"
-)
-}
->
-
-<FaFileAlt/>
-
-<span>
-
-Text
-
-</span>
-
-</div>
-
-</div>
-
-<div className="check">
+</select>
 
 <input
-type="checkbox"
-defaultChecked
-/>
-
-<label>
-
-Make visible to students
-
-</label>
-
-</div>
-
-<div className="check">
-
-<input
-type="checkbox"
-/>
-
-<label>
-
-Allow download
-
-</label>
-
-</div>
-
-</div>
-
-<div className="upload-right">
-
-<div
-
-className={`drop-area ${
-drag
-?
-"dragging"
-:
-""
-}`}
-
-onDragOver={(e)=>{
-
-e.preventDefault();
-
-setDrag(
-true
-);
-
-}}
-
-onDragLeave={()=>
-
-setDrag(
-false
-)
-
-}
-
-onDrop={
-dropFile
-}
-
->
-
-<input
-hidden
-id="upload"
 type="file"
-onChange={
-chooseFile
-}
 />
 
-<label
-htmlFor="upload"
->
-
-<FaUpload/>
-
-<h2>
-
-{
-file
-?
-
-file.name
-
-:
-
-"Drag & Drop your file"
-}
-
-</h2>
-
-<p>
-
-{
-file
-?
-
-"File Selected"
-
-:
-
-"or Browse Files"
-}
-
-</p>
-
-</label>
-
-</div>
-
-<div className="file-info">
-
-<h3>
-
-File Information
-
-</h3>
-
-{
-
-file
-
-?
-
-<>
-
-<p>
-
-Name:
-{file.name}
-
-</p>
-
-<p>
-
-Size:
-{
-(
-file.size/
-1024/
-1024
-)
-.toFixed(2)
-}
-MB
-
-</p>
-
-<p>
-
-Type:
-{
-file.type
-}
-
-</p>
-
-</>
-
-:
-
-<>
-
-<p>
-
-Maximum file size:
-50MB
-
-</p>
-
-<p>
-
-Supported:
-PDF,
-PPT,
-XLSX,
-TXT
-
-</p>
-
-</>
-
-}
-
-</div>
-
-</div>
-
-</div>
-
-<div className="file-info">
-
-<h3>
-
-Uploaded Materials
-
-</h3>
-
-{
-
-uploadedMaterials.length===0
-
-?
-
-<p>
-
-No material uploaded
-
-</p>
-
-:
-
-uploadedMaterials.map(
-(item)=>(
-
 <div
-key={item.id}
-
-style={{
-display:"flex",
-justifyContent:"space-between",
-marginBottom:"12px"
-}}
-
+className="upload-actions"
 >
 
-<div>
-
-<p>
-
-{item.name}
-
-</p>
-
-<small>
-
-{item.size}
-MB
-
-</small>
-
-</div>
-
 <button
-
-onClick={()=>
-
-removeMaterial(
-item.id
-)
-
-}
-
->
-
-Delete
-
-</button>
-
-</div>
-
-)
-
-)
-
-}
-
-</div>
-
-<div className="modal-actions">
-
-<button
-className="cancel"
 onClick={onClose}
 >
-
 Cancel
-
 </button>
 
 <button
-className="upload-btn"
-
-onClick={
-uploadMaterial
-}
+onClick={upload}
 >
-
-Upload Material
-
+Upload
 </button>
+
+</div>
 
 </div>
 
@@ -703,6 +232,4 @@ Upload Material
 
 );
 
-};
-
-export default UploadStudyMaterialModal;
+}

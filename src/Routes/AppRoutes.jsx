@@ -1,36 +1,56 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+BrowserRouter,
+Routes,
+Route,
+} from "react-router-dom";
 
 import SignupPage from "../pages/SignupPage/SignupPage";
 import LoginPage from "../pages/Login/LoginPage";
-import TeacherDashboard from "../pages/Dashboard/TeacherDashboard";const AppRoutes = () => {
-  return (
-    <BrowserRouter>
+import TeacherDashboard from "../pages/Dashboard/TeacherDashboard";
 
-      <Routes>
+const AppRoutes = () => {
 
-        {/* First page */}
-        <Route
-          path="/"
-          element={<SignupPage />}
-        />
+return (
 
-        <Route
-          path="/login"
-          element={<LoginPage />}
-       />
-       <Route
-          path="Dashboard"
-          element={<TeacherDashboard />}
+<BrowserRouter>
+
+<Routes>
+
+{/* Signup */}
+
+<Route
+path="/"
+element={
+<SignupPage/>
+}
 />
 
-        
 
-        
+{/* Login */}
 
-      </Routes>
+<Route
+path="/login"
+element={
+<LoginPage/>
+}
+/>
 
-    </BrowserRouter>
-  );
+
+{/* Dashboard */}
+
+<Route
+path="/dashboard"
+element={
+<TeacherDashboard/>
+}
+/>
+
+</Routes>
+
+</BrowserRouter>
+
+);
+
 };
 
 export default AppRoutes;

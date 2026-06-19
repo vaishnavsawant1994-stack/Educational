@@ -1,84 +1,246 @@
-import React from "react";
 import "../../pages/Dashboard/sections/StudyMaterial.css";
-const subjectData = [
-  {
-    subject: "Mathematics",
-    total: 214,
-  },
+import { useState } from "react";
 
-  {
-    subject: "Science",
-    total: 185,
-  },
+export default function SubjectWisePanel() {
 
-  {
-    subject: "English",
-    total: 148,
-  },
+const [selected,setSelected]=useState(null);
 
-  {
-    subject: "Physics",
-    total: 116,
-  },
+const subjects=[
 
-  {
-    subject: "Chemistry",
-    total: 97,
-  },
+{
+name:"Physics",
+materials:[
+"Motion Notes",
+"Electricity PDF",
+"Question Bank",
+"Lab Manual"
+]
+},
+
+{
+name:"Chemistry",
+materials:[
+"Organic Chemistry",
+"Chemical Bonding",
+"Reaction Notes",
+"MCQ Set"
+]
+},
+
+{
+name:"Mathematics",
+materials:[
+"Formula Book",
+"Calculus",
+"Algebra",
+"Practice Sheets"
+]
+},
+
+{
+name:"Biology",
+materials:[
+"Human Anatomy",
+"Revision Notes",
+"Important Questions",
+"Worksheets"
+]
+},
+
+{
+name:"English",
+materials:[
+"Grammar",
+"Literature",
+"Essay Writing",
+"Poems"
+]
+},
+
+{
+name:"Computer Science",
+materials:[
+"Java",
+"Python",
+"Projects",
+"Assignments"
+]
+},
+
+{
+name:"History",
+materials:[
+"Ancient India",
+"World History",
+"Revision",
+"Question Set"
+]
+},
+
+{
+name:"Geography",
+materials:[
+"Maps",
+"Climate",
+"Practice Files",
+"Assignments"
+]
+},
+
+{
+name:"Economics",
+materials:[
+"Micro Economics",
+"Case Studies",
+"MCQ",
+"Practice"
+]
+}
+
 ];
 
-const SubjectWisePanel = () => {
-  return (
-    <div className="subject-panel card">
+return(
 
-      <div className="panel-header">
+<>
 
-        <h3>
-          Subject Wise Materials
-        </h3>
+<div className="side-card">
 
-        <button>
-          View All
-        </button>
+<div className="subject-header">
 
-      </div>
+<h3>
+Subject Wise Materials
+</h3>
 
-      <div className="subject-list">
+<button>
+View All
+</button>
 
-        {subjectData.map(
-          (
-            item,
-            index
-          ) => (
-            <div
-              key={index}
-              className="subject-item"
-            >
+</div>
 
-              <div>
+<div className="subject-scroll">
 
-                <h4>
-                  {item.subject}
-                </h4>
+{
 
-                <p>
-                  Available Material
-                </p>
+subjects.map((subject)=>(
 
-              </div>
+<div
+key={subject.name}
+className="subject-row"
+onClick={()=>
+setSelected(subject)
+}
+>
 
-              <div className="subject-count">
-                {item.total}
-              </div>
+<span>
 
-            </div>
-          )
-        )}
+📚
+{" "}
+{subject.name}
 
-      </div>
+</span>
 
-    </div>
-  );
-};
+<span>
 
-export default SubjectWisePanel;
+→
+
+</span>
+
+</div>
+
+))
+
+}
+
+</div>
+
+</div>
+
+
+{
+
+selected && (
+
+<div
+className="subject-popup-overlay"
+onClick={()=>
+setSelected(null)
+}
+>
+
+<div
+className="subject-popup"
+onClick={(e)=>
+e.stopPropagation()
+}
+>
+
+<button
+className="subject-close"
+onClick={()=>
+setSelected(null)
+}
+>
+
+✕
+
+</button>
+
+<h2>
+
+{selected.name}
+
+</h2>
+
+<p>
+
+Available materials
+
+</p>
+
+<div className="subject-files">
+
+{
+
+selected.materials.map(
+(item,index)=>(
+
+<div
+key={index}
+className="subject-file"
+>
+
+📄
+
+{item}
+
+</div>
+
+)
+
+)
+
+}
+
+</div>
+
+<button
+className="subject-open-btn"
+>
+
+Open Materials
+
+</button>
+
+</div>
+
+</div>
+
+)
+
+}
+
+</>
+
+);
+
+}

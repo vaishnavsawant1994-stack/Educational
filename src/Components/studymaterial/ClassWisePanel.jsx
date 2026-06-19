@@ -1,88 +1,245 @@
-import React from "react";
 import "../../pages/Dashboard/sections/StudyMaterial.css";
-const classData = [
-  {
-    class: "Class 1",
-    count: 84,
-  },
+import { useState } from "react";
 
-  {
-    class: "Class 2",
-    count: 91,
-  },
+export default function ClassWisePanel() {
 
-  {
-    class: "Class 5",
-    count: 102,
-  },
+const [selected,setSelected]=useState(null);
 
-  {
-    class: "Class 8",
-    count: 146,
-  },
+const classes=[
 
-  {
-    class: "Class 10",
-    count: 208,
-  },
+{
+name:"Class 6",
+materials:78,
+content:[
+"Science Notes",
+"Math Worksheets",
+"English Grammar",
+"History PDFs"
+]
+},
+
+{
+name:"Class 7",
+materials:92,
+content:[
+"Biology Material",
+"Physics Intro",
+"Math Practice",
+"Assignments"
+]
+},
+
+{
+name:"Class 8",
+materials:105,
+content:[
+"Chemistry Notes",
+"MCQ Sets",
+"Project Files",
+"Video Lessons"
+]
+},
+
+{
+name:"Class 9",
+materials:132,
+content:[
+"English Literature",
+"Physics Chapter 1",
+"Tests",
+"Assignments"
+]
+},
+
+{
+name:"Class 10",
+materials:210,
+content:[
+"Board Material",
+"Sample Papers",
+"MCQ Practice",
+"Revision Notes"
+]
+},
+
+{
+name:"Class 11",
+materials:285,
+content:[
+"Science Material",
+"Math PDFs",
+"Presentations",
+"Question Bank"
+]
+},
+
+{
+name:"Class 12",
+materials:346,
+content:[
+"Boards Revision",
+"Physics Material",
+"Biology Notes",
+"Important Questions"
+]
+},
+
+{
+name:"Class Diploma",
+materials:124,
+content:[
+"Projects",
+"Practical Notes",
+"Lab Reports"
+]
+}
+
 ];
 
-const ClassWisePanel = () => {
-  return (
-    <div className="class-panel card">
+return(
 
-      <div className="panel-header">
+<>
 
-        <h3>
-          Class Wise Materials
-        </h3>
+<div className="side-card">
 
-        <button>
-          View All
-        </button>
+<div className="side-title">
 
-      </div>
+<h3>
+Class Wise Materials
+</h3>
 
-      <div className="class-list">
+<button>
+View All
+</button>
 
-        {classData.map(
-          (
-            item,
-            index
-          ) => (
-            <div
-              key={index}
-              className="class-item"
-            >
+</div>
 
-              <div>
+<div className="class-scroll">
 
-                <h4>
-                  {
-                    item.class
-                  }
-                </h4>
+{
 
-                <p>
-                  Study Material
-                </p>
+classes.map((item)=>(
 
-              </div>
+<div
+key={item.name}
+className="class-item"
+onClick={()=>
+setSelected(item)
+}
+>
 
-              <span>
-                {
-                  item.count
-                }
-              </span>
+<div>
 
-            </div>
-          )
-        )}
+📁
+{" "}
+{item.name}
 
-      </div>
+</div>
 
-    </div>
-  );
-};
+<span>
 
-export default ClassWisePanel;
+{item.materials}
+
+Materials
+
+</span>
+
+</div>
+
+))
+
+}
+
+</div>
+
+</div>
+
+
+{
+
+selected && (
+
+<div
+className="class-overlay"
+onClick={()=>
+setSelected(null)
+}
+>
+
+<div
+className="class-modal"
+onClick={(e)=>
+e.stopPropagation()
+}
+>
+
+<button
+className="class-close"
+onClick={()=>
+setSelected(null)
+}
+>
+
+✕
+
+</button>
+
+<h2>
+
+{selected.name}
+
+</h2>
+
+<p>
+
+Available Study Materials
+
+</p>
+
+<div className="class-materials">
+
+{
+
+selected.content.map(
+(mat,index)=>(
+
+<div
+key={index}
+className="material-box"
+>
+
+📄
+
+{mat}
+
+</div>
+
+)
+)
+
+}
+
+</div>
+
+<button
+className="open-class"
+
+>
+
+Open Materials
+
+</button>
+
+</div>
+
+</div>
+
+)
+
+}
+
+</>
+
+);
+
+}

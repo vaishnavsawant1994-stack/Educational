@@ -1,66 +1,113 @@
-import React from "react";
-import "../../pages/Dashboard/sections/StudyMaterial.css";
-const DeleteMaterialModal = ({
-  open,
-  onClose,
-  onDelete,
-  selected = "Study Material",
-}) => {
-  if (!open) {
-    return null;
-  }
+import "./DeleteModal.css";
 
-  return (
-    <div className="delete-overlay">
+export default function DeleteModal({
+close,
+materials,
+refresh
+}){
 
-      <div className="delete-modal">
+const remove=(id)=>{
 
-        <div className="delete-icon">
-          🗑️
-        </div>
+const updated=
+materials.filter(
+m=>
+m.id!==id
+);
 
-        <h2>
-          Delete Material
-        </h2>
+localStorage.setItem(
+"studyMaterials",
+JSON.stringify(
+updated
+)
+);
 
-        <p>
-          Are you sure you want to delete
-          <strong>
-            {" "}
-            {selected}
-          </strong>
-          ?
-        </p>
+window.dispatchEvent(
+new Event(
+"materialDeleted"
+)
+);
 
-        <span>
-          This action cannot be undone.
-        </span>
+refresh();
 
-        <div className="delete-actions">
-
-          <button
-            className="keep-btn"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-
-          <button
-            className="remove-btn"
-            onClick={() => {
-              onDelete?.();
-              onClose?.();
-            }}
-          >
-            Delete
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-  );
 };
 
-export default DeleteMaterialModal;
+return(
+
+<div className="delete-overlay">
+
+<div className="delete-modal">
+
+<button
+className="close"
+onClick={close}
+>
+✕
+</button>
+
+<h2>
+Delete Study Material
+</h2>
+
+<div className="delete-list">
+
+{
+materials.length===0?
+
+<p>
+No Materials Found
+</p>
+
+:
+
+materials.map(
+(item)=>(
+
+<div
+key={item.id}
+className="delete-item"
+>
+
+<div>
+
+<h4>
+{item.title}
+</h4>
+
+<p>
+{item.class}
+•
+{item.subject}
+</p>
+
+</div>
+
+<button
+
+onClick={()=>
+remove(
+item.id
+)
+}
+
+>
+
+Delete
+
+</button>
+
+</div>
+
+)
+)
+
+}
+
+</div>
+
+</div>
+
+</div>
+
+);
+
+}

@@ -1,6 +1,9 @@
 import "./TeacherDashboard.css";
 import { useState } from "react";
-
+import {
+useNavigate
+}
+from "react-router-dom";
 import CreateClassModal from "../../Components/CreateClassModal";
 
 import {
@@ -50,6 +53,9 @@ const TeacherDashboard = () => {
   const [openModal, setOpenModal] =
     useState(false);
 
+  const navigate =
+    useNavigate();  
+
   const menu = [
     { key:"dashboard",icon:<FaHome/>,label:"Dashboard"},
     { key:"profile",icon:<FaUser/>,label:"My Profile"},
@@ -63,7 +69,7 @@ const TeacherDashboard = () => {
     { key:"calendar",icon:<FaCalendarAlt/>,label:"Calendar"},
     { key:"messages",icon:<FaComments/>,label:"Messages"},
     { key:"announc",icon:<FaPaperPlane/>,label:"Announc"},
-    { key:"notifications",icon:<FaBell/>,label:"Notifications"},
+    { key:"notifications",icon:<FaBell/>,label:"Notifi's & Requst"},
     { key:"settings",icon:<FaCog/>,label:"Settings"},
     
   ];
@@ -181,13 +187,28 @@ const TeacherDashboard = () => {
 
           </nav>
 
-          <button className="logout">
+          <button
+className="logout"
 
-            <FaSignOutAlt/>
+onClick={() => {
 
-            Logout
+localStorage.clear();
 
-          </button>
+sessionStorage.clear();
+
+navigate(
+"/login"
+);
+
+}}
+
+>
+
+<FaSignOutAlt/>
+
+Logout
+
+</button>
 
         </aside>
 

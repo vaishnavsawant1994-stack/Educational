@@ -1,6 +1,5 @@
 import React from "react";
-import "../../pages/Dashboard/sections/StudyMaterial.css";
-const MaterialFilters = ({
+import "../../pages/Dashboard/sections/StudyMaterial.css";const MaterialFilters = ({
   filters,
   onChange,
   onReset,

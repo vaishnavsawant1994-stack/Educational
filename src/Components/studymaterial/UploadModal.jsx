@@ -1,187 +1,279 @@
-import React, {
-  useState,
-} from "react";
-
 import "../../pages/Dashboard/sections/StudyMaterial.css";
-const UploadStudyMaterial = ({
-  onClose,
-}) => {
-  const [file, setFile] =
-    useState(null);
+import { useState } from "react";
 
-  const [title, setTitle] =
-    useState("");
+export default function UploadModal({
+close,
+refresh
+}) {
 
-  const [className, setClassName] =
-    useState("");
+const [form,setForm]=
+useState({
 
-  const [subject, setSubject] =
-    useState("");
+title:"",
+class:"",
+subject:"",
+type:"PDF",
 
-  const handleFile = (
-    e
-  ) => {
-    setFile(
-      e.target.files[0]
-    );
-  };
+});
 
-  const handleSubmit = (
-    e
-  ) => {
-    e.preventDefault();
 
-    console.log({
-      title,
-      className,
-      subject,
-      file,
-    });
+const upload=()=>{
 
-    onClose();
-  };
+if(
+!form.title||
+!form.class||
+!form.subject
+){
 
-  return (
-    <div className="upload-overlay">
+alert(
+"Fill all fields"
+);
 
-      <div className="upload-modal">
+return;
 
-        <div className="upload-head">
+}
 
-          <h2>
-            Upload Study Material
-          </h2>
 
-          <button
-            onClick={onClose}
-          >
-            ✕
-          </button>
+const old=
+JSON.parse(
+localStorage.getItem(
+"studyMaterials"
+)
+)||[];
 
-        </div>
 
-        <form
-          onSubmit={
-            handleSubmit
-          }
-          className="upload-form"
-        >
+const item={
 
-          <input
-            placeholder="Material Title"
-            value={title}
-            onChange={(e) =>
-              setTitle(
-                e.target.value
-              )
-            }
-          />
+id:Date.now(),
 
-          <select
-            value={className}
-            onChange={(e) =>
-              setClassName(
-                e.target.value
-              )
-            }
-          >
-            <option value="">
-              Select Class
-            </option>
+title:
+form.title,
 
-            <option>
-              Class 1
-            </option>
+class:
+form.class,
 
-            <option>
-              Class 5
-            </option>
+subject:
+form.subject,
 
-            <option>
-              Class 8
-            </option>
+type:
+form.type,
 
-            <option>
-              Class 10
-            </option>
+uploaded:
+new Date()
+.toLocaleDateString(),
 
-          </select>
+downloads:0,
 
-          <select
-            value={subject}
-            onChange={(e) =>
-              setSubject(
-                e.target.value
-              )
-            }
-          >
-            <option value="">
-              Select Subject
-            </option>
-
-            <option>
-              Mathematics
-            </option>
-
-            <option>
-              Science
-            </option>
-
-            <option>
-              English
-            </option>
-
-            <option>
-              Chemistry
-            </option>
-
-          </select>
-
-          <label className="drop-area">
-
-            <input
-              type="file"
-              hidden
-              onChange={
-                handleFile
-              }
-            />
-
-            <span>
-              {file
-                ? file.name
-                : "Choose or Drop File"}
-            </span>
-
-          </label>
-
-          <div className="upload-actions">
-
-            <button
-              type="button"
-              className="cancel-btn"
-              onClick={
-                onClose
-              }
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="save-btn"
-            >
-              Upload
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-
-    </div>
-  );
 };
 
-export default UploadStudyMaterial;
+
+localStorage.setItem(
+
+"studyMaterials",
+
+JSON.stringify([
+item,
+...old
+])
+
+);
+
+
+window.dispatchEvent(
+new Event(
+"materialUploaded"
+)
+);
+
+
+refresh();
+
+alert(
+"Upload Successful"
+);
+
+close();
+
+};
+
+
+
+return(
+
+<div className="upload-overlay">
+
+<div className="upload-modal">
+
+<h2>
+
+Upload Study Material
+
+</h2>
+
+
+<input
+
+placeholder=
+"Title"
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+title:
+e.target.value
+
+})
+
+}
+
+/>
+
+
+<select
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+class:
+e.target.value
+
+})
+
+}
+
+>
+
+<option value="">
+Select Class
+</option>
+
+<option>
+Class 6
+</option>
+
+<option>
+Class 7
+</option>
+
+<option>
+Class 8
+</option>
+
+<option>
+Class 9
+</option>
+
+</select>
+
+
+<select
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+subject:
+e.target.value
+
+})
+
+}
+
+>
+
+<option value="">
+Select Subject
+</option>
+
+<option>
+Physics
+</option>
+
+<option>
+Chemistry
+</option>
+
+<option>
+Math
+</option>
+
+<option>
+Biology
+</option>
+
+</select>
+
+
+<select
+
+onChange={(e)=>
+
+setForm({
+
+...form,
+
+type:
+e.target.value
+
+})
+
+}
+
+>
+
+<option>
+PDF
+</option>
+
+<option>
+DOCX
+</option>
+
+<option>
+PPT
+</option>
+
+</select>
+
+
+
+<div className="upload-actions">
+
+<button
+onClick={
+close
+}
+>
+
+Cancel
+
+</button>
+
+
+<button
+onClick={
+upload
+}
+>
+
+Upload
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+);
+
+}

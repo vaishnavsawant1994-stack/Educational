@@ -1,78 +1,252 @@
-import React from "react";
 import "../../pages/Dashboard/sections/StudyMaterial.css";
-const widgets = [
-  {
-    title: "Bulk Upload",
-    desc:
-      "Upload multiple study materials at once",
-    icon: "📤",
-  },
+import { useState } from "react";
 
-  {
-    title: "Folder Management",
-    desc:
-      "Organize uploaded files",
-    icon: "📁",
-  },
+export default function BottomWidgets() {
 
-  {
-    title: "Download Reports",
-    desc:
-      "Export upload activity",
-    icon: "📊",
-  },
+const [open,setOpen]=useState("");
 
-  {
-    title: "Storage Usage",
-    desc:
-      "Monitor available space",
-    icon: "💾",
-  },
+const data={
 
-  {
-    title: "Important Notice",
-    desc:
-      "Latest updates and reminders",
-    icon: "🔔",
-  },
-];
+bulk:{
+title:"Bulk Upload",
+content:
+"Upload multiple files at once. Supported: PDF, DOCX, PPTX, XLSX. Drag & drop support can be added later."
+},
 
-const BottomWidgets = () => {
-  return (
-    <div className="widgets-section">
+folder:{
+title:"Folder Management",
+content:
+"Create folders, move materials between folders and organize by subject or class."
+},
 
-      {widgets.map(
-        (
-          item,
-          index
-        ) => (
-          <div
-            key={index}
-            className="widget-card card"
-          >
+report:{
+title:"Downloads Report",
+content:
+"View total downloads, top performing files and student engagement analytics."
+},
 
-            <div className="widget-icon">
-              {item.icon}
-            </div>
+storage:{
+title:"Storage Used",
+content:
+"Current Usage: 2.45 GB / 10 GB. Delete old files or upgrade storage."
+},
 
-            <h3>
-              {item.title}
-            </h3>
+notice:{
+title:"Important Notice",
+content:
+"Add important notices for students. These appear on dashboard and notifications."
+}
 
-            <p>
-              {item.desc}
-            </p>
-
-            <button>
-              Open
-            </button>
-
-          </div>
-        )
-      )}
-
-    </div>
-  );
 };
 
-export default BottomWidgets;
+return (
+
+<>
+
+<div className="bottom-grid">
+
+{/* BULK */}
+
+<div
+className="bottom-card"
+onClick={()=>setOpen("bulk")}
+>
+
+<div className="bottom-icon green">
+📤
+</div>
+
+<div>
+
+<b><h3>Bulk Upload</h3></b>
+
+<p>Upload multiple files</p>
+
+<p>at once</p>
+
+</div>
+
+</div>
+
+
+{/* FOLDER */}
+
+<div
+className="bottom-card"
+onClick={()=>setOpen("folder")}
+>
+
+<div className="bottom-icon yellow">
+📁
+</div>
+
+<div>
+
+<h3>Folder Management</h3>
+
+<p>Organize materials</p>
+
+<p>in folders</p>
+
+</div>
+
+</div>
+
+
+{/* REPORT */}
+
+<div
+className="bottom-card"
+onClick={()=>setOpen("report")}
+>
+
+<div className="bottom-icon purple">
+📈
+</div>
+
+<div>
+
+<h3>Downloads Report</h3>
+
+<p>View detailed</p>
+
+<p>download analytics</p>
+
+</div>
+
+</div>
+
+
+{/* STORAGE */}
+
+<div
+className="bottom-card"
+onClick={()=>setOpen("storage")}
+>
+
+<div className="bottom-icon blue">
+☁️
+</div>
+
+<div>
+
+<h3>Storage Used</h3>
+
+<p>2.45 GB of 10 GB used</p>
+
+<div className="progress">
+
+<div className="progress-fill"/>
+
+</div>
+
+</div>
+
+</div>
+
+
+{/* NOTICE */}
+
+<div
+className="bottom-card"
+onClick={()=>setOpen("notice")}
+>
+
+<div className="bottom-icon red">
+📢
+</div>
+
+<div>
+
+<h3>Important Notice</h3>
+
+<p>Add important notes</p>
+
+<p>for students</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+{/* POPUP */}
+
+{
+open && (
+
+<div
+className="widget-overlay"
+onClick={()=>setOpen("")}
+>
+
+<div
+className="widget-modal"
+onClick={(e)=>
+e.stopPropagation()
+}
+>
+
+<button
+className="widget-close"
+onClick={()=>setOpen("")}
+>
+✕
+</button>
+
+<h2>
+{data[open].title}
+</h2>
+
+<p>
+{data[open].content}
+</p>
+
+<div className="widget-body">
+
+{open==="bulk" &&
+<button>
+Start Upload
+</button>
+}
+
+{open==="folder" &&
+<button>
+Open Folder
+</button>
+}
+
+{open==="report" &&
+<button>
+View Report
+</button>
+}
+
+{open==="storage" &&
+<button>
+Manage Storage
+</button>
+}
+
+{open==="notice" &&
+<button>
+Create Notice
+</button>
+}
+
+</div>
+
+</div>
+
+</div>
+
+)
+
+}
+
+</>
+
+);
+
+}

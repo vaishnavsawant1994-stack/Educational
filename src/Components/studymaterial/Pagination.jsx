@@ -1,69 +1,32 @@
-import React from "react";
 import "../../pages/Dashboard/sections/StudyMaterial.css";
-const Pagination = ({
-  currentPage = 1,
-  totalPages = 10,
-  onPageChange,
-}) => {
-  const pages = [];
+export default function Pagination(){
 
-  for (
-    let i = 1;
-    i <= totalPages;
-    i++
-  ) {
-    pages.push(i);
-  }
+return(
 
-  return (
-    <div className="pagination">
+<div className="pagination">
 
-      <button
-        className="page-nav"
-        disabled={
-          currentPage === 1
-        }
-        onClick={() =>
-          onPageChange(
-            currentPage - 1
-          )
-        }
-      >
-        ←
-      </button>
+<button>
+←
+</button>
 
-      {pages.map((page) => (
-        <button
-          key={page}
-          className={
-            currentPage === page
-              ? "page-btn active-page"
-              : "page-btn"
-          }
-          onClick={() =>
-            onPageChange(page)
-          }
-        >
-          {page}
-        </button>
-      ))}
+<button>
+1
+</button>
 
-      <button
-        className="page-nav"
-        disabled={
-          currentPage === totalPages
-        }
-        onClick={() =>
-          onPageChange(
-            currentPage + 1
-          )
-        }
-      >
-        →
-      </button>
+<button>
+2
+</button>
 
-    </div>
-  );
-};
+<button>
+3
+</button>
 
-export default Pagination;
+<button>
+→
+</button>
+
+</div>
+
+);
+
+}

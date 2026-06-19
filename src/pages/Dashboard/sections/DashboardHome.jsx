@@ -1,207 +1,649 @@
 import "./DashboardHome.css";
-
 import { useState } from "react";
 
 import Announcement from "./Announcement";
-import UploadStudyMaterialModal from "./UploadStudyMaterialModal";
-
 import CreateClassModal from "../../../Components/CreateClassModal";
+import UploadStudyMaterialModal from "./UploadStudyMaterialModal";
+import NotificationRequestPopup from "./NotificationRequestPopup";
 
 import {
   FaPlus,
   FaPaperPlane,
   FaUpload,
-  FaCheckCircle,
-  FaUsers,
-  FaClipboardList,
-  FaBookOpen,
-  FaStar,
+  FaChevronDown,
 } from "react-icons/fa";
 
 const DashboardHome = () => {
+  const [openAnnouncement, setOpenAnnouncement] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openUpload, setOpenUpload] = useState(false);
 
-  const [openAnnouncement, setOpenAnnouncement] =
-    useState(false);
+  const [selectedMonth, setSelectedMonth] =
+    useState("This Month");
+const [
+showNotifications,
+setShowNotifications
+]=useState(false);
+  const [requests, setRequests] = useState([
+    {
+      id: 1,
+      name: "Priya Sharma",
+      msg: "Requesting a meeting to discuss doubts in Data Structures.",
+      time: "Today • 4:30 PM",
+      status: "Pending",
+    },
+    {
+      id: 2,
+      name: "Aman Verma",
+      msg: "Need explanation for recursion topic in Java.",
+      time: "Today • 6:00 PM",
+      status: "Pending",
+    },
+    {
+      id: 3,
+      name: "Neha Gupta",
+      msg: "Want to discuss project ideas.",
+      time: "Tomorrow • 11:00 AM",
+      status: "Pending",
+    },
+  ]);
 
-  const [openModal, setOpenModal] =
-    useState(false);
+  const schedule = [
+    {
+      id: 1,
+      time: "08:30 AM",
+      title: "Class 10A — Computer Science",
+      action: "Join Class",
+    },
+    {
+      id: 2,
+      time: "10:00 AM",
+      title: "Class 10B — Data Structures",
+      action: "Join Class",
+    },
+    {
+      id: 3,
+      time: "12:00 PM",
+      title: "Parent Meeting",
+      action: "Meeting",
+    },
+    {
+      id: 4,
+      time: "02:00 PM",
+      title: "Test Review — Class 10A",
+      action: "Review",
+    },
+    {
+      id: 5,
+      time: "03:30 PM",
+      title: "Project Guidance Session",
+      action: "Guidance",
+    },
+  ];
 
-  const [openUpload, setOpenUpload] =
-    useState(false);
+  const updateStatus = (id, status) => {
+    setRequests((prev) =>
+      prev.map((r) =>
+        r.id === id
+          ? {
+              ...r,
+              status,
+            }
+          : r
+      )
+    );
+  };
+
+  const openSchedule = (item) => {
+    alert(`Opening: ${item}`);
+  };
+
+  const viewAllNotifications = () => {
+setShowNotifications(true);
+};
+
+  const viewAllSchedule = () => {
+    alert("Opening Schedule");
+  };
 
   return (
     <>
-
       <div className="teacher-home">
 
-        <div className="hero">
+        {/* HERO + REQUEST */}
 
-          <div className="hero-left">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "2fr 520px",
+            gap: "20px",
+          }}
+        >
 
-            <p className="welcome">
-              Welcome back,
-            </p>
+          <div className="hero">
 
-            <h1>
-              Priyanka 👋
-            </h1>
+            <div className="hero-left">
 
-            <p className="sub">
-              Manage your classes and empower students.
-            </p>
+              <p className="welcome">
+                Welcome back,
+              </p>
 
-            <div className="hero-stats">
+              <h1>
+                Priyanka 👋
+              </h1>
 
-              <div className="mini-card">
-                <span>Today's Classes</span>
-                <h2>5</h2>
+              <p className="sub">
+                Manage your classes and empower students.
+              </p>
+
+              <div className="hero-stats">
+
+                <div className="mini-card">
+                  <span>
+                    Today's Classes
+                  </span>
+                  <h2>5</h2>
+                </div>
+
+                <div className="mini-card">
+                  <span>
+                    Students
+                  </span>
+                  <h2>248</h2>
+                </div>
+
+                <div className="mini-card">
+                  <span>
+                    Attendance
+                  </span>
+                  <h2>91%</h2>
+                </div>
+
+                <div className="mini-card">
+                  <span>
+                    Pending Tasks
+                  </span>
+                  <h2>12</h2>
+                </div>
+
               </div>
 
-              <div className="mini-card">
-                <span>Students</span>
-                <h2>248</h2>
-              </div>
+              <div className="action-row">
 
-              <div className="mini-card">
-                <span>Attendance</span>
-                <h2>91%</h2>
-              </div>
+                <button
+                  className="action-btn"
+                  onClick={() =>
+                    setOpenModal(true)
+                  }
+                >
+                  <FaPlus />
+                  Create Class
+                </button>
 
-              <div className="mini-card">
-                <span>Pending Tasks</span>
-                <h2>12</h2>
+                <button
+                  className="action-btn"
+                  onClick={() =>
+                    setOpenAnnouncement(
+                      true
+                    )
+                  }
+                >
+                  <FaPaperPlane />
+                  Announcement
+                </button>
+
+                <button
+className="action-btn"
+onClick={() => setOpenUpload(true)}
+>
+<FaUpload />
+Upload Material
+</button>
+
+{openUpload && (
+<UploadStudyMaterialModal
+onClose={() => setOpenUpload(false)}
+/>
+)}
+
               </div>
 
             </div>
 
-            <div className="action-row">
+            <div className="hero-right">
 
-              <button
-                className="action-btn"
-                onClick={() =>
-                  setOpenModal(true)
-                }
-              >
-                <FaPlus />
-                Create Class
-              </button>
-
-              <button
-                className="action-btn"
-                onClick={() =>
-                  setOpenAnnouncement(true)
-                }
-              >
-                <FaPaperPlane />
-                Announcement
-              </button>
-
-              <button
-                className="action-btn"
-                onClick={() =>
-                  setOpenUpload(true)
-                }
-              >
-                <FaUpload />
-                Upload Material
-              </button>
+              <img
+                src="https://images.unsplash.com/photo-1588072432836-e10032774350"
+                alt=""
+              />
 
             </div>
 
           </div>
 
-          <div className="hero-right">
+          <div className="requests">
 
-            <img
-              src="https://images.unsplash.com/photo-1588072432836-e10032774350"
-              alt=""
-            />
+            <div className="card-head">
+{/*Notificatio and Request */}
+              <h3>
+                Notifications & Requests
+              </h3>
+
+          <button
+className="view-btn"
+onClick={viewAllNotifications}
+>
+
+View All
+
+</button>
+
+            </div>
+
+            {requests.map(
+              (item) => (
+                <div
+                  key={item.id}
+                  className="request"
+                >
+
+                  <h4>
+                    {item.name}
+                  </h4>
+
+                  <p>
+                    {item.msg}
+                  </p>
+
+                  <small>
+                    {item.time}
+                  </small>
+
+                  <div
+                    style={{
+                      display:
+                        "flex",
+                      gap: "10px",
+                      marginTop:
+                        "14px",
+                    }}
+                  >
+
+                    <button
+                      onClick={() =>
+                        updateStatus(
+                          item.id,
+                          "Accepted"
+                        )
+                      }
+                    >
+                      Accept
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateStatus(
+                          item.id,
+                          "Rescheduled"
+                        )
+                      }
+                    >
+                      Reschedule
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateStatus(
+                          item.id,
+                          "Declined"
+                        )
+                      }
+                    >
+                      Decline
+                    </button>
+
+                  </div>
+
+                  <p>
+                    Status:
+                    {" "}
+                    {item.status}
+                  </p>
+
+                </div>
+              )
+            )}
 
           </div>
 
         </div>
 
-        <div className="dashboard-row">
+        {/* SCHEDULE + PERFORMANCE */}
 
-          <div className="schedule">
+        <div className="dashboard-overview-row">
 
-            <h3>
-              Today's Schedule
-            </h3>
+          <div className="schedule-card">
 
-            <div className="item">
-              08:30 AM • Class 10A
+            <div className="card-head">
+
+              <h3>
+                Today's Schedule
+              </h3>
+
+              <button
+                className="view-btn"
+                onClick={
+                  viewAllSchedule
+                }
+              >
+                View All
+              </button>
+
             </div>
 
-            <div className="item">
-              10:00 AM • Data Structures
-            </div>
+            <div className="timeline">
 
-            <div className="item">
-              02:00 PM • Test Review
-            </div>
+              {schedule.map(
+                (item) => (
+                  <div
+                    key={item.id}
+                    className="timeline-row"
+                  >
 
-            <div className="item">
-              03:30 PM • Guidance
+                    <div className="time">
+                      {item.time}
+                    </div>
+
+                    <div className="event">
+                      {item.title}
+                    </div>
+
+                    <button
+                      className="schedule-btn"
+                      onClick={() =>
+                        openSchedule(
+                          item.title
+                        )
+                      }
+                    >
+                      {item.action}
+                    </button>
+
+                  </div>
+                )
+              )}
+
             </div>
 
           </div>
 
-          <div className="performance">
+          <div className="performance-card">
 
-            <h3>
-              Performance Overview
-            </h3>
+            <div className="card-head">
 
-            <div className="score">
-              82%
+              <h3>
+                Performance Overview
+              </h3>
+
+              <button
+                className="month-btn"
+                onClick={() =>
+                  setSelectedMonth(
+                    selectedMonth ===
+                      "This Month"
+                      ? "Last Month"
+                      : "This Month"
+                  )
+                }
+              >
+                {selectedMonth}
+
+                <FaChevronDown />
+
+              </button>
+
             </div>
 
-            <p>
-              Average Performance
-            </p>
+            <div className="performance-content">
+
+              <div className="score-box">
+
+                <p>
+                  Average Score
+                </p>
+
+                <h1>
+                  82%
+                </h1>
+
+                <span>
+                  ↑ 8%
+                </span>
+
+              </div>
+
+              <div className="circle-score">
+
+                <div className="circle-inner">
+                  82%
+                </div>
+
+              </div>
+
+              <div className="stats">
+
+                <div>
+                  Highest
+                  <span>
+                    98%
+                  </span>
+                </div>
+
+                <div>
+                  Lowest
+                  <span>
+                    45%
+                  </span>
+                </div>
+
+                <div>
+                  Improvement
+                  <span>
+                    15%
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
 
           </div>
 
         </div>
+        {/* EXTRA DASHBOARD SECTION */}
 
-        <div className="info-grid">
+<div className="dashboard-extra-grid">
 
-          <div className="info">
-            <FaBookOpen />
-            <h3>43</h3>
-            <p>Assignments</p>
-          </div>
+  {/* Attendance */}
 
-          <div className="info">
-            <FaClipboardList />
-            <h3>28</h3>
-            <p>Tests</p>
-          </div>
+  <div className="extra-card">
 
-          <div className="info">
-            <FaUsers />
-            <h3>248</h3>
-            <p>Students</p>
-          </div>
+    <div className="extra-head">
+      <h3>Attendance Overview</h3>
+      <button>View All</button>
+    </div>
 
-          <div className="info">
-            <FaCheckCircle />
-            <h3>91%</h3>
-            <p>Attendance</p>
-          </div>
+    <table className="attendance-table">
 
-          <div className="info">
-            <FaStar />
-            <h3>4.8</h3>
-            <p>Teacher Rating</p>
-          </div>
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
 
-        </div>
+      <tbody>
+
+        {[
+          ["Class 10A",45,3,"93%"],
+          ["Class 10B",41,6,"87%"],
+          ["Class 11A",38,7,"84%"],
+          ["Class 11B",36,4,"90%"],
+        ].map((r)=>(
+
+          <tr key={r[0]}>
+
+            <td>{r[0]}</td>
+
+            <td>{r[1]}</td>
+
+            <td>{r[2]}</td>
+
+            <td>
+              {r[3]}
+              <div className="progress">
+                <span />
+              </div>
+            </td>
+
+          </tr>
+
+        ))}
+
+      </tbody>
+
+    </table>
+
+    <button className="full-btn">
+      Mark Attendance
+    </button>
+
+  </div>
+
+
+  {/* Assignment */}
+
+  <div className="extra-card">
+
+    <div className="extra-head">
+      <h3>Assignment Center</h3>
+      <button>View All</button>
+    </div>
+
+    <div className="list">
+
+      <div><span>📘 Homework Assigned</span><b>28</b></div>
+      <div><span>🟢 Submitted</span><b>15</b></div>
+      <div><span>🟡 Pending Review</span><b>43</b></div>
+      <div><span>🔴 Late Submission</span><b>8</b></div>
+
+    </div>
+
+    <button className="full-btn">
+      Create Assignment
+    </button>
+
+  </div>
+
+
+  {/* Tests */}
+
+  <div className="extra-card">
+
+    <div className="extra-head">
+      <h3>Tests & MCQ</h3>
+      <button>View All</button>
+    </div>
+
+    <div className="list">
+
+      <div><span>📝 Tests Created</span><b>28</b></div>
+      <div><span>📅 Upcoming Tests</span><b>6</b></div>
+      <div><span>📄 Draft Tests</span><b>4</b></div>
+      <div><span>📊 Published Results</span><b>18</b></div>
+
+    </div>
+
+    <button className="full-btn">
+      Create Test
+    </button>
+
+  </div>
+
+
+  {/* Study */}
+
+  <div className="extra-card">
+
+    <div className="extra-head">
+      <h3>Study Material</h3>
+      <button>View All</button>
+    </div>
+
+    <div className="list">
+
+      <div><span>📄 Documents</span><b>56</b></div>
+      <div><span>▶ Videos</span><b>23</b></div>
+      <div><span>📘 Presentations</span><b>12</b></div>
+      <div><span>📦 Other Files</span><b>8</b></div>
+
+    </div>
+
+    <button className="full-btn">
+      Upload Material
+    </button>
+
+  </div>
+
+
+  {/* Student */}
+
+  <div className="extra-card">
+
+    <div className="extra-head">
+      <h3>Student Performance</h3>
+      <button>View All</button>
+    </div>
+
+    <div className="student-bars">
+
+      <div><span>Excellent</span><progress value="68" max="100"/></div>
+      <div><span>Good</span><progress value="50" max="100"/></div>
+      <div><span>Average</span><progress value="25" max="100"/></div>
+      <div><span>Needs Improvement</span><progress value="18" max="100"/></div>
+
+    </div>
+
+  </div>
+
+
+  {/* Quick */}
+
+  <div className="extra-card">
+
+    <div className="extra-head">
+      <h3>Quick Actions</h3>
+    </div>
+
+    <div className="quick-grid">
+
+      <button>Add Student</button>
+      <button>Create Class</button>
+      <button>Upload Material</button>
+      <button>Create Test</button>
+      <button>Generate MCQ</button>
+      <button>View Reports</button>
+
+    </div>
+
+  </div>
+
+</div>
 
       </div>
-
-      {/* CREATE CLASS */}
 
       <CreateClassModal
         open={openModal}
@@ -210,54 +652,53 @@ const DashboardHome = () => {
         }
       />
 
-      {/* ANNOUNCEMENT */}
+      
 
-      {
-        openAnnouncement && (
+      {openAnnouncement && (
 
-          <div className="popup-overlay">
+        <div className="popup-overlay">
 
-            <div className="popup-window">
+          <div className="popup-window">
 
-              <button
-                className="close-popup"
-                onClick={() =>
-                  setOpenAnnouncement(false)
-                }
-              >
-                ✕
-              </button>
+            <button
+              className="close-popup"
+              onClick={() =>
+                setOpenAnnouncement(
+                  false
+                )
+              }
+            >
+              ✕
 
-              <Announcement />
+            </button>
 
-            </div>
-
-          </div>
-
-        )
-      }
-
-      {/* UPLOAD MATERIAL */}
-
-      {
-        openUpload && (
-
-          <div className="popup-overlay">
-
-            <div className="popup-window">
-
-              <UploadStudyMaterialModal
-                onClose={() =>
-                  setOpenUpload(false)
-                }
-              />
-
-            </div>
+            <Announcement />
 
           </div>
 
-        )
-      }
+        </div>
+
+      )}
+
+      {
+showNotifications && (
+
+<NotificationRequestPopup
+
+requests={
+requests
+}
+
+onClose={()=>
+setShowNotifications(
+false
+)
+}
+
+/>
+
+)
+}
 
     </>
   );

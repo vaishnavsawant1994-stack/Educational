@@ -1,107 +1,134 @@
+import React, { useState } from "react";
+import {
+FaEye,
+FaDownload,
+FaTrash
+} from "react-icons/fa";
+
 import "../../pages/Dashboard/sections/StudyMaterial.css";
-const demoData = [
-{
-id:1,
-title:"Algebra Notes",
-class:"Class 10",
-subject:"Mathematics",
-type:"PDF",
-upload:"2 hours ago",
-},
 
-{
-id:2,
-title:"Motion Chapter",
-class:"Class 9",
-subject:"Science",
-type:"DOC",
-upload:"1 day ago",
-},
+export default function MaterialTable({
+materials=[],
+refresh
+}) {
 
-{
-id:3,
-title:"Grammar Practice",
-class:"Class 8",
-subject:"English",
-type:"PDF",
-upload:"4 days ago",
-},
+const [viewItem,setViewItem]=
+useState(null);
 
-{
-id:4,
-title:"Chemical Bonding",
-class:"Class 11",
-subject:"Chemistry",
-type:"PPT",
-upload:"1 week ago",
-},
-];
+const [downloadItem,
+setDownloadItem]=
+useState(null);
 
-const MaterialTable = ({
-data=[],
-search=""
-})=>{
+const removeMaterial=(id)=>{
 
-const rows=
-data.length
-?
-data
-:
-demoData;
-
-const filtered=
-rows.filter(
-(item)=>
-
-item.title
-.toLowerCase()
-
-.includes(
-
-(search || "")
-.toLowerCase()
-
-)
-
+const ok=
+window.confirm(
+"Delete this material?"
 );
+
+if(!ok) return;
+
+const updated=
+materials.filter(
+(i)=>
+i.id!==id
+);
+
+localStorage.setItem(
+"studyMaterials",
+JSON.stringify(updated)
+);
+
+refresh?.();
+
+};
 
 return(
 
-<div className="material-table">
+<>
+
+<div className="table-card">
+
+<div className="table-head">
 
 <h2>
-
-Uploaded Materials
-
+All Uploaded Materials
 </h2>
 
-<table>
+<p>
+
+{materials.length}
+
+materials found
+
+</p>
+
+</div>
+
+
+<div className="table-wrap">
+
+<table className="material-table">
 
 <thead>
 
 <tr>
 
-<th>Title</th>
+<th>
+Material
+</th>
 
-<th>Class</th>
+<th>
+Class
+</th>
 
-<th>Subject</th>
+<th>
+Subject
+</th>
 
-<th>Type</th>
+<th>
+Type
+</th>
 
-<th>Upload</th>
+<th>
+Uploaded
+</th>
 
-<th>Actions</th>
+<th
+className="action-col"
+>
+Actions
+</th>
 
 </tr>
 
 </thead>
 
+
 <tbody>
 
 {
 
-filtered.map(
+materials.length===0
+
+?
+
+<tr>
+
+<td
+colSpan="6"
+className="empty-table"
+>
+
+No Materials Uploaded
+
+</td>
+
+</tr>
+
+:
+
+materials.map(
 (item)=>(
 
 <tr
@@ -109,21 +136,51 @@ key={item.id}
 >
 
 <td>
+
+<div className="material-cell">
+
+<div className="file-icon">
+
+📄
+
+</div>
+
+<div className="material-info">
+
+<h4>
+
 {item.title}
+
+</h4>
+
+<span>
+
+Study Material
+
+</span>
+
+</div>
+
+</div>
+
 </td>
 
 <td>
+
 {item.class}
+
 </td>
 
 <td>
+
 {item.subject}
+
 </td>
 
 <td>
 
 <span
-className="type"
+className="type-pill"
 >
 
 {item.type}
@@ -133,46 +190,67 @@ className="type"
 </td>
 
 <td>
-{item.upload}
+
+{item.uploaded}
+
 </td>
+
 
 <td>
 
+<div
+className="icon-actions"
+>
+
 <button
+title="View"
+
+className="view-icon"
+
 onClick={()=>
-alert(
-"Viewing"
+setViewItem(
+item
 )
 }
 >
 
-View
+<FaEye/>
 
 </button>
 
 <button
+title="Download"
+
+className="download-icon"
+
 onClick={()=>
-alert(
-"Downloading"
+setDownloadItem(
+item
 )
 }
 >
 
-Download
+<FaDownload/>
 
 </button>
 
 <button
+title="Delete"
+
+className="delete-icon"
+
 onClick={()=>
-alert(
-"Deleted"
+removeMaterial(
+item.id
 )
 }
 >
 
-Delete
+<FaTrash/>
 
 </button>
+
+</div>
 
 </td>
 
@@ -190,8 +268,10 @@ Delete
 
 </div>
 
+</div>
+
+</>
+
 );
 
-};
-
-export default MaterialTable;
+}
