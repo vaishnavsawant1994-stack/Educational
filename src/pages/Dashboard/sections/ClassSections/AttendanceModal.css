@@ -1,0 +1,474 @@
+/* =========================
+OVERLAY
+========================= */
+
+.attendance-overlay{
+position:fixed !important;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:16px;
+background:rgba(12,18,45,.34);
+backdrop-filter:blur(8px);
+z-index:999999;
+overflow:hidden;
+}
+
+/* =========================
+MODAL
+========================= */
+
+.attendance-modal{
+position:relative;
+width:min(1460px,100%);
+height:min(900px,96vh);
+background:#fff;
+border-radius:30px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+box-shadow:
+0 30px 80px rgba(20,20,60,.18);
+}
+
+/* =========================
+HEADER
+========================= */
+
+.attendance-header{
+padding:34px 42px;
+border-bottom:1px solid #eef0ff;
+display:flex;
+flex-direction:column;
+gap:8px;
+flex-shrink:0;
+}
+
+.attendance-header h1{
+font-size:38px;
+font-weight:800;
+line-height:1;
+color:#172554;
+}
+
+.attendance-header p{
+font-size:16px;
+color:#677294;
+}
+
+.attendance-close{
+position:absolute;
+top:28px;
+right:30px;
+width:54px;
+height:54px;
+border:none;
+border-radius:18px;
+background:#f6f6fc;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:26px;
+cursor:pointer;
+}
+
+/* =========================
+BODY
+========================= */
+
+.attendance-body{
+flex:1;
+padding:22px 28px;
+display:grid;
+grid-template-columns:1fr 410px;
+gap:22px;
+overflow:hidden;
+min-height:0;
+}
+
+/* =========================
+LEFT
+========================= */
+
+.attendance-left{
+display:flex;
+flex-direction:column;
+overflow:hidden;
+gap:18px;
+}
+
+.attendance-top-controls{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.attendance-select{
+height:64px;
+border:1px solid #e8eaf7;
+border-radius:16px;
+padding:0 18px;
+background:#fff;
+}
+
+/* FILTER */
+
+.attendance-filter{
+display:grid;
+grid-template-columns:1.6fr repeat(4,1fr);
+gap:14px;
+}
+
+.attendance-filter input{
+height:64px;
+border:none;
+outline:none;
+background:#f7f8ff;
+border-radius:16px;
+padding:0 22px;
+font-size:16px;
+}
+
+.attendance-filter button{
+height:64px;
+border-radius:16px;
+border:1px solid #eceeff;
+background:white;
+font-weight:700;
+}
+
+/* TABLE */
+
+.attendance-table{
+flex:1;
+overflow-y:auto;
+overflow-x:hidden;
+border:1px solid #edf0ff;
+border-radius:20px;
+background:white;
+min-height:0;
+}
+
+.attendance-row{
+display:grid;
+grid-template-columns:
+90px
+2fr
+1fr
+1fr
+1fr;
+
+align-items:center;
+
+padding:24px;
+
+border-bottom:1px solid #edf0ff;
+
+flex-shrink:0;
+}
+
+.attendance-row:hover{
+background:#fafbff;
+}
+
+.attendance-row:last-child{
+border:none;
+}
+
+.student-box{
+display:flex;
+align-items:center;
+gap:16px;
+}
+
+.student-avatar{
+width:46px;
+height:46px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:800;
+color:#6545ff;
+background:#f2efff;
+}
+
+.radio-option{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:16px;
+}
+
+/* =========================
+BOTTOM BUTTONS
+========================= */
+
+.attendance-actions{
+
+display:grid;
+
+grid-template-columns:
+1fr
+1fr
+240px;
+
+gap:16px;
+
+padding-top:16px;
+
+background:white;
+
+flex-shrink:0;
+
+}
+
+.attendance-actions button{
+
+height:64px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:17px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.attendance-actions button:nth-child(1){
+background:#eefbf2;
+color:#1fa956;
+}
+
+.attendance-actions button:nth-child(2){
+background:#fff0f3;
+color:#ea315d;
+}
+
+.attendance-actions button:nth-child(3){
+background:#f6f7ff;
+color:#6545ff;
+}
+
+/* =========================
+RIGHT PANEL
+========================= */
+
+.attendance-right{
+
+border:1px solid #ecefff;
+
+background:#faf9ff;
+
+border-radius:24px;
+
+padding:24px;
+
+display:flex;
+
+flex-direction:column;
+
+overflow:hidden;
+
+min-height:0;
+}
+
+.attendance-right h2{
+
+font-size:22px;
+
+font-weight:800;
+
+color:#172554;
+
+margin-bottom:16px;
+}
+
+.summary-scroll{
+
+flex:1;
+
+overflow-y:auto;
+
+overflow-x:hidden;
+
+padding-right:6px;
+}
+
+.summary-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:14px;
+
+margin-bottom:20px;
+}
+
+/* KEEP CHART */
+
+.summary-card{
+
+background:white;
+
+padding:20px;
+
+border-radius:18px;
+
+border:1px solid #edf0ff;
+
+height:170px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:space-between;
+
+box-shadow:
+0 4px 14px rgba(0,0,0,.03);
+}
+
+.summary-chart{
+height:42px;
+overflow:hidden;
+}
+
+/* KEEP THIS WILL UPDATE */
+
+.summary-update{
+
+margin-top:18px;
+
+padding-top:20px;
+
+border-top:1px solid #eceeff;
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+}
+
+.summary-update-row{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+}
+
+/* KEEP DOWNLOAD */
+
+.summary-download{
+
+margin-top:20px;
+
+padding-top:20px;
+
+border-top:1px solid #eceeff;
+}
+
+.summary-download button{
+
+height:64px;
+
+width:100%;
+
+border:1px solid #eceeff;
+
+border-radius:16px;
+
+background:white;
+
+font-weight:700;
+}
+
+/* SUBMIT */
+
+.attendance-submit{
+
+margin-top:18px;
+
+flex-shrink:0;
+}
+
+.attendance-submit button{
+
+width:100%;
+
+height:72px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#6847ff,
+#7c62ff
+);
+
+color:white;
+
+font-size:20px;
+
+font-weight:800;
+
+cursor:pointer;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1150px){
+
+.attendance-body{
+grid-template-columns:1fr;
+overflow:auto;
+}
+
+}
+
+@media(max-width:768px){
+
+.attendance-overlay{
+padding:0;
+}
+
+.attendance-modal{
+width:100vw;
+height:100vh;
+border-radius:0;
+}
+
+.attendance-top-controls{
+grid-template-columns:1fr;
+}
+
+.attendance-filter{
+grid-template-columns:1fr;
+}
+
+.attendance-row{
+min-width:960px;
+}
+
+.attendance-actions{
+grid-template-columns:1fr;
+}
+
+}

@@ -66,7 +66,7 @@ const CreateClassModal = ({
     }));
   };
 
-  const createClass = () => {
+const createClass = () => {
   if (
     !form.className ||
     !form.subject ||
@@ -79,6 +79,17 @@ const CreateClassModal = ({
     return;
   }
 
+  /* Generate only if empty */
+  const finalCode =
+    form.classCode?.trim() ||
+    (
+      "CLS-" +
+      Math.random()
+        .toString(36)
+        .slice(2, 7)
+        .toUpperCase()
+    );
+
   const oldClasses =
     JSON.parse(
       localStorage.getItem(
@@ -86,10 +97,29 @@ const CreateClassModal = ({
       )
     ) || [];
 
+  /* Prevent duplicate class codes */
+  const exists =
+    oldClasses.some(
+      (cls) =>
+        cls.classCode ===
+        finalCode
+    );
+
+  if (exists) {
+    alert(
+      "Class code already exists"
+    );
+
+    return;
+  }
+
   const newClass = {
     id: Date.now(),
 
     ...form,
+
+    classCode:
+      finalCode,
 
     createdAt:
       new Date()
@@ -106,8 +136,24 @@ const CreateClassModal = ({
   );
 
   alert(
-    "Class Created Successfully"
+    `Class Created Successfully\nCode: ${finalCode}`
   );
+
+  /* reset form */
+
+  setForm({
+    className: "",
+    classCode: "",
+    subject: "",
+    grade: "",
+    section: "",
+    room: "",
+    description: "",
+    color: "#6d50ff",
+    announcements: true,
+    studentPosts: true,
+    thumbnail: null,
+  });
 
   onClose();
 };

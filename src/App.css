@@ -1,27 +1,97 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+/* ==========================
+   GLOBAL RESET
+========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+/* ==========================
+   HTML / BODY / ROOT
+========================== */
 
 html,
 body,
-#root{
-width:100%;
-min-height:100%;
-
-margin:0;
-padding:0;
-
-overflow-x:hidden;
-overflow-y:auto;
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-body{
-  background:#f6f7fc;
-  font-family:"Poppins",sans-serif;
+body {
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+  color: #222;
+  line-height: 1.5;
 }
 
-#root{
-  max-width:none !important;
+/* ==========================
+   ROOT APP
+========================== */
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================
+   IMAGES
+========================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================
+   LINKS
+========================== */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ==========================
+   INPUTS
+========================== */
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  outline: none;
+}
+
+/* ==========================
+   TABLE
+========================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ==========================
+   LIST
+========================== */
+
+ul,
+ol {
+  list-style: none;
 }

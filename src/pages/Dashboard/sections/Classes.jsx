@@ -1,163 +1,307 @@
 import "./Classes.css";
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  FaUsers,
-  FaBookOpen,
-} from "react-icons/fa";
+import StatsCards from "./ClassSections/StatsCards";
+import HeroBanner from "./ClassSections/HeroBanner";
+import ClassGrid from "./ClassSections/ClassGrid";
+import QuickActions from "./ClassSections/QuickActions";
+import BatchTable from "./ClassSections/BatchTable";
+import ClassDetails from "./ClassSections/ClassDetails";
+import { FaBookOpen } from "react-icons/fa";
 
-const Classes = () => {
-  const [classes, setClasses] =
-    useState([]);
+import { batches } from "./ClassSections/ClassesData";
 
-  useEffect(() => {
-    const data =
-      JSON.parse(
-        localStorage.getItem(
-          "createdClasses"
-        )
-      ) || [];
+import ViewAllClassesModal from "./ClassSections/ViewAllClassesModal";
+import EditClassModal from "./ClassSections/EditClassModal";
 
-    setClasses(data);
-  }, []);
+const Classes=()=>{
 
-  const deleteClass = (
-    id
-  ) => {
-    const updated =
-      classes.filter(
-        (item) =>
-          item.id !== id
-      );
+const[
+classes,
+setClasses
+]=useState([]);
 
-    localStorage.setItem(
-      "createdClasses",
-      JSON.stringify(
-        updated
-      )
-    );
+const[
+openEdit,
+setOpenEdit
+]=useState(false);
 
-    setClasses(
-      updated
-    );
-  };
+const[
+selectedClass,
+setSelectedClass
+]=useState(null);
 
-  return (
-    <div className="classes-page">
+const[
+openViewAll,
+setOpenViewAll
+]=useState(false);
 
-      <h1>
-        My Classes
-      </h1>
+useEffect(()=>{
 
-      {classes.length === 0 ? (
+loadClasses();
 
-        <div className="empty">
+},[]);
 
-          No Classes Created
+const loadClasses=()=>{
 
-        </div>
+const data=
 
-      ) : (
+JSON.parse(
+localStorage.getItem(
+"createdClasses"
+)
 
-        <div className="class-list">
+)||[];
 
-          {classes.map(
-            (item) => (
+setClasses(
+data
+);
 
-              <div
-                key={
-                  item.id
-                }
-                className="class-card"
-              >
+if(
+!selectedClass &&
+data.length
+){
 
-                <div
-                  className="class-color"
-                  style={{
-                    background:
-                      item.color,
-                  }}
-                />
+setSelectedClass(
+data[0]
+);
 
-                <div className="content">
+}
 
-                  <h2>
+};
 
-                    {
-                      item.className
-                    }
+/* DELETE */
 
-                  </h2>
+const deleteClass=(id)=>{
 
-                  <p>
+const updated=
 
-                    {
-                      item.subject
-                    }
+classes.filter(
+(item)=>
+item.id!==id
+);
 
-                  </p>
+localStorage.setItem(
 
-                  <span>
+"createdClasses",
 
-                    {
-                      item.grade
-                    }
+JSON.stringify(
+updated
+)
 
-                  </span>
+);
 
-                  <div className="meta">
+setClasses(
+updated
+);
 
-                    <span>
+if(
+selectedClass?.id===
+id
+){
 
-                      <FaBookOpen />
+setSelectedClass(
+updated[0]
+||
+null
+);
 
-                      {" "}
+}
 
-                      {
-                        item.classCode
-                      }
+};
 
-                    </span>
+/* CLICK CLASS */
 
-                    <span>
+const selectClass=(item)=>{
 
-                      <FaUsers />
+/* UPDATE DETAILS */
 
-                      0 Students
+setSelectedClass({
+...item
+});
 
-                    </span>
+/* KEEP EDIT POPUP */
 
-                  </div>
+setOpenEdit(
+true
+);
 
-                </div>
+/* CLOSE VIEW */
 
-                <button
-                  className="delete"
-                  onClick={() =>
-                    deleteClass(
-                      item.id
-                    )
-                  }
-                >
+setOpenViewAll(
+false
+);
 
-                  Delete
+};
 
-                </button>
+return(
 
-              </div>
+<div className="classes-page">
 
-            )
-          )}
+<div className="top-area">
 
-        </div>
+<div className="left-top">
 
-      )}
+<StatsCards/>
 
-    </div>
-  );
+</div>
+
+<div className="right-top">
+
+<HeroBanner
+
+onClassCreated={()=>{
+
+loadClasses();
+
+}}
+
+/>
+
+</div>
+
+</div>
+
+<div className="section">
+
+<div className="section-header">
+
+<h2>
+
+Created Classes
+
+</h2>
+
+<button
+
+onClick={()=>
+
+setOpenViewAll(
+true
+)
+
+}
+
+>
+
+View All
+
+</button>
+
+</div>
+
+<ClassGrid
+
+classes={
+classes
+}
+
+deleteClass={
+deleteClass
+}
+
+selectClass={
+selectClass
+}
+
+selectedClass={
+selectedClass
+}
+
+/>
+
+</div>
+
+<div className="bottom-layout">
+
+<BatchTable
+
+selectedClass={
+selectedClass
+}
+
+showAddButton={
+!selectedClass?.batches?.length
+}
+
+/>
+
+<ClassDetails
+
+selected={
+selectedClass
+}
+
+/>
+
+</div>
+
+<div className="section">
+
+<div className="section-header">
+
+<h2>
+
+Quick Actions
+
+</h2>
+
+</div>
+
+<QuickActions/>
+
+</div>
+
+<ViewAllClassesModal
+
+open={
+openViewAll
+}
+
+onClose={()=>
+
+setOpenViewAll(
+false
+)
+
+}
+
+classes={
+classes
+}
+
+selectClass={
+selectClass
+}
+
+/>
+
+<EditClassModal
+
+open={
+openEdit
+}
+
+data={
+selectedClass
+}
+
+onClose={()=>{
+
+setOpenEdit(
+false
+);
+
+loadClasses();
+
+}}
+
+/>
+
+</div>
+
+);
+
 };
 
 export default Classes;

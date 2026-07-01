@@ -49,26 +49,26 @@ const Login = () => {
       return;
     }
 
-    if (
-      teacher &&
-      teacher.email ===
-        loginData.email &&
-      teacher.password ===
-        loginData.password
-    ) {
-      alert(
-        "Login Successful"
-      );
+if (
+  teacher &&
+  teacher.email === loginData.email &&
+  teacher.password === loginData.password
+) {
+  alert("Login Successful");
 
-      localStorage.setItem(
-        "isLoggedIn",
-        "true"
-      );
+  localStorage.setItem(
+    "isLoggedIn",
+    "true"
+  );
 
-      navigate(
-        "/dashboard"
-      );
-    } else {
+  // Save current logged-in teacher
+  localStorage.setItem(
+    "currentTeacher",
+    JSON.stringify(teacher)
+  );
+
+  navigate("/dashboard");
+}else {
       alert(
         "Invalid Email or Password"
       );

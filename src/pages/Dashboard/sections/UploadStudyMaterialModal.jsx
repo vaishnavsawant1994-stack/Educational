@@ -1,235 +1,294 @@
 import "./UploadStudyMaterialModal.css";
 import { useState } from "react";
 
-export default function UploadStudyMaterialModal({
-onClose,
-}) {
+export default function UploadStudyMaterialModal({ onClose }) {
+  const [form, setForm] = useState({
+    title: "",
+    class: "",
+    subject: "",
+    type: "PDF",
+  });
 
-const [form,setForm]=useState({
-title:"",
-class:"",
-subject:"",
-type:"PDF",
-});
+  const upload = () => {
+    if (!form.title || !form.class || !form.subject) {
+      alert("Fill all fields");
+      return;
+    }
 
-const upload=()=>{
+    const old =
+      JSON.parse(localStorage.getItem("studyMaterials")) || [];
 
-if(
-!form.title ||
-!form.class ||
-!form.subject
-){
-alert("Fill all fields");
-return;
-}
+    const newItem = {
+      id: Date.now(),
+      title: form.title,
+      class: form.class,
+      subject: form.subject,
+      type: form.type,
+      uploaded: new Date().toLocaleDateString(),
+      downloads: 0,
+    };
 
-const old=
-JSON.parse(
-localStorage.getItem(
-"studyMaterials"
-)
-)||[];
+    localStorage.setItem(
+      "studyMaterials",
+      JSON.stringify([newItem, ...old])
+    );
 
-const newItem={
-id:Date.now(),
+    alert("Material Uploaded");
 
-title:form.title,
+    onClose();
 
-class:form.class,
+    window.dispatchEvent(
+      new Event("materialUploaded")
+    );
+  };
 
-subject:form.subject,
+  return (
+    <div className="upload-overlay">
+      <div className="upload-modal">
 
-type:form.type,
+        <button
+          className="close-btn"
+          onClick={onClose}
+        >
+          ✕
+        </button>
 
-uploaded:
-new Date()
-.toLocaleDateString(),
+        <div className="modal-header">
+          <div className="header-icon">☁</div>
 
-downloads:0,
-};
+          <div>
+            <h2>Upload Study Material</h2>
 
-localStorage.setItem(
-"studyMaterials",
+            <p>
+              Upload notes, presentations,
+              documents or any study material
+            </p>
+          </div>
+        </div>
 
-JSON.stringify([
-newItem,
-...old,
-])
-);
+        <div className="upload-content">
 
-alert(
-"Material Uploaded"
-);
+          {/* LEFT */}
+          <div className="upload-left">
 
-onClose();
+            <label>Title *</label>
 
-window.dispatchEvent(
-new Event(
-"materialUploaded"
-)
-);
+            <input
+              placeholder="Enter material title"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  title: e.target.value,
+                })
+              }
+            />
 
-};
+            <label>Description</label>
 
-return(
+            <textarea
+              placeholder="Enter description (optional)"
+            />
 
-<div
-className="upload-overlay"
->
+            <label>Select Class *</label>
 
-<div
-className="upload-modal"
->
+            <select
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  class: e.target.value,
+                })
+              }
+            >
+              <option>Select class</option>
+              <option>Class 9</option>
+              <option>Class 10</option>
+              <option>Class 11</option>
+              <option>Class 12</option>
+            </select>
 
-<button
-className="close-btn"
-onClick={onClose}
->
-✕
-</button>
+            <label>Subject *</label>
 
-<h2>
-Upload Study Material
-</h2>
+            <select
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  subject: e.target.value,
+                })
+              }
+            >
+              <option>Select subject</option>
+              <option>Physics</option>
+              <option>Math</option>
+              <option>Chemistry</option>
+              <option>Biology</option>
+            </select>
 
-<input
-placeholder="Material Title"
+            <label>Material Type *</label>
 
-onChange={(e)=>
+            <div className="material-types">
 
-setForm({
-...form,
-title:
-e.target.value,
-})
+              <div
+                className={`type-card ${
+                  form.type === "PDF"
+                    ? "active-type"
+                    : ""
+                }`}
+                onClick={() =>
+                  setForm({
+                    ...form,
+                    type: "PDF",
+                  })
+                }
+              >
+                PDF
+              </div>
 
-}
-/>
+              <div
+                className={`type-card ${
+                  form.type === "PPT"
+                    ? "active-type"
+                    : ""
+                }`}
+                onClick={() =>
+                  setForm({
+                    ...form,
+                    type: "PPT",
+                  })
+                }
+              >
+                PPT
+              </div>
 
-<select
-onChange={(e)=>
+              <div
+                className={`type-card ${
+                  form.type === "XLSX"
+                    ? "active-type"
+                    : ""
+                }`}
+                onClick={() =>
+                  setForm({
+                    ...form,
+                    type: "XLSX",
+                  })
+                }
+              >
+                Excel
+              </div>
 
-setForm({
-...form,
-class:
-e.target.value,
-})
+              <div
+                className={`type-card ${
+                  form.type === "DOCX"
+                    ? "active-type"
+                    : ""
+                }`}
+                onClick={() =>
+                  setForm({
+                    ...form,
+                    type: "DOCX",
+                  })
+                }
+              >
+                Text
+              </div>
 
-}
->
+            </div>
 
-<option>
-Select Class
-</option>
+            <div className="checkboxes">
 
-<option>
-Class 9
-</option>
+              <label>
+                <input
+                  type="checkbox"
+                  defaultChecked
+                />
+                Make visible to students
+              </label>
 
-<option>
-Class 10
-</option>
+              <label>
+                <input type="checkbox" />
+                Allow download
+              </label>
 
-<option>
-Class 11
-</option>
+            </div>
 
-<option>
-Class 12
-</option>
+          </div>
 
-</select>
+          {/* RIGHT */}
+          <div className="upload-right">
 
-<select
-onChange={(e)=>
+            <div className="upload-box">
 
-setForm({
-...form,
-subject:
-e.target.value,
-})
+              <div className="upload-icon">
+                ☁
+              </div>
 
-}
->
+              <h3>
+                Drag & drop your file here
+              </h3>
 
-<option>
-Select Subject
-</option>
+              <span>or</span>
 
-<option>
-Physics
-</option>
+              <label className="browse-btn">
+                Browse Files
 
-<option>
-Math
-</option>
+                <input
+                  type="file"
+                  hidden
+                />
+              </label>
 
-<option>
-Chemistry
-</option>
+            </div>
 
-<option>
-Biology
-</option>
+            <div className="file-info">
 
-</select>
+              <h4>
+                File Information
+              </h4>
 
-<select
-onChange={(e)=>
+              <ul>
+                <li>
+                  Maximum file size:
+                  50MB
+                </li>
 
-setForm({
-...form,
-type:
-e.target.value,
-})
+                <li>
+                  Supported formats:
+                  PDF, PPT, PPTX,
+                  DOC, DOCX,
+                  XLS, XLSX
+                </li>
 
-}
->
+                <li>
+                  You can upload
+                  text notes in TXT
+                  format
+                </li>
+              </ul>
 
-<option>
-PDF
-</option>
+            </div>
 
-<option>
-DOCX
-</option>
+          </div>
 
-<option>
-PPT
-</option>
+        </div>
 
-<option>
-XLSX
-</option>
+        <div className="upload-actions">
 
-</select>
+          <button
+            className="cancel-btn"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
 
-<input
-type="file"
-/>
+          <button
+            className="upload-btn"
+            onClick={upload}
+          >
+            Upload Material
+          </button>
 
-<div
-className="upload-actions"
->
+        </div>
 
-<button
-onClick={onClose}
->
-Cancel
-</button>
-
-<button
-onClick={upload}
->
-Upload
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-);
-
+      </div>
+    </div>
+  );
 }

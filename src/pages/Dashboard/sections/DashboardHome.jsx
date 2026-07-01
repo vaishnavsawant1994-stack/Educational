@@ -1,16 +1,22 @@
 import "./DashboardHome.css";
-import { useState } from "react";
-
+import React, {
+  useState,
+  useEffect,
+} from "react";
 import Announcement from "./Announcement";
 import CreateClassModal from "../../../Components/CreateClassModal";
 import UploadStudyMaterialModal from "./UploadStudyMaterialModal";
 import NotificationRequestPopup from "./NotificationRequestPopup";
-
+import teacherImage from "../../../assets/teacher.png";
 import {
   FaPlus,
   FaPaperPlane,
   FaUpload,
-  FaChevronDown,
+  FaCalendarAlt,
+  FaUsers,
+  FaChartLine,
+  FaClipboardList,
+  FaChevronDown
 } from "react-icons/fa";
 
 const DashboardHome = () => {
@@ -106,6 +112,16 @@ setShowNotifications(true);
     alert("Opening Schedule");
   };
 
+  const [teacher, setTeacher] = useState(null);
+
+useEffect(() => {
+  const currentTeacher = JSON.parse(
+    localStorage.getItem("currentTeacher")
+  );
+
+  setTeacher(currentTeacher);
+}, []);
+
   return (
     <>
       <div className="teacher-home">
@@ -125,49 +141,65 @@ setShowNotifications(true);
 
             <div className="hero-left">
 
-              <p className="welcome">
-                Welcome back,
-              </p>
+              <div className="welcome-badge">
+  👋 Good to see you !
+</div>
 
+<p className="welcome">
+  Welcome back,
+</p>
               <h1>
-                Priyanka 👋
+                {teacher?.fullName} 👋
               </h1>
 
               <p className="sub">
                 Manage your classes and empower students.
               </p>
 
-              <div className="hero-stats">
 
-                <div className="mini-card">
-                  <span>
-                    Today's Classes
-                  </span>
-                  <h2>5</h2>
-                </div>
+<div className="hero-stats">
 
-                <div className="mini-card">
-                  <span>
-                    Students
-                  </span>
-                  <h2>248</h2>
-                </div>
+  <div className="mini-card">
+    <div className="card-icon blue">
+      <FaCalendarAlt />
+    </div>
 
-                <div className="mini-card">
-                  <span>
-                    Attendance
-                  </span>
-                  <h2>91%</h2>
-                </div>
+    <span>Today's Classes</span>
 
-                <div className="mini-card">
-                  <span>
-                    Pending Tasks
-                  </span>
-                  <h2>12</h2>
-                </div>
+    <h2 className="blue-text">5</h2>
+  </div>
 
-              </div>
+  <div className="mini-card">
+    <div className="card-icon green">
+      <FaUsers />
+    </div>
+
+    <span>Students</span>
+
+    <h2 className="green-text">248</h2>
+  </div>
+
+  <div className="mini-card">
+    <div className="card-icon purple">
+      <FaChartLine />
+    </div>
+
+    <span>Attendance</span>
+
+    <h2 className="purple-text">91%</h2>
+  </div>
+
+  <div className="mini-card">
+    <div className="card-icon orange">
+      <FaClipboardList />
+    </div>
+
+    <span>Pending Tasks</span>
+
+    <h2 className="orange-text">12</h2>
+  </div>
+
+</div>
 
               <div className="action-row">
 
@@ -210,14 +242,16 @@ onClose={() => setOpenUpload(false)}
               </div>
 
             </div>
+            
 
             <div className="hero-right">
 
-              <img
-                src="https://images.unsplash.com/photo-1588072432836-e10032774350"
-                alt=""
-              />
-
+              <div className="hero-right-img">
+  <img
+    src={teacher}
+    alt="Teacher Hero"
+  />
+</div>
             </div>
 
           </div>

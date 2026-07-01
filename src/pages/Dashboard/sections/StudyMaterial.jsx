@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./StudyMaterial.css";
-
+import { FiBookOpen } from "react-icons/fi";
 import SearchBox from "../../../Components/studymaterial/SearchBox";
 import MaterialTable from "../../../Components/studymaterial/MaterialTable";
 import Pagination from "../../../Components/studymaterial/Pagination";
@@ -81,18 +81,21 @@ return(
 
 <header className="study-header">
 
-<div>
+<div className="header-left">
 
-<h1>
-Study Material
-</h1>
+  <div className="study-icon">
+      <FiBookOpen />
 
-<p>
-Manage and organize all uploaded study materials
-</p>
+  </div>
+
+  <div className="header-text">
+    <h1>Study Material</h1>
+    <p>
+      Manage and organize all uploaded study materials
+    </p>
+  </div>
 
 </div>
-
 
 <div className="header-actions">
 
@@ -219,8 +222,7 @@ loadMaterials
 </div>
 
 
-<BottomWidgets/>
-
+<BottomWidgets refresh={loadMaterials}/>
 
 {
 showUpload&&(

@@ -214,48 +214,6 @@ Logout
 
         <section className="main">
 
-          <header className="topbar">
-
-            <button
-              className="mobile-btn"
-              onClick={() =>
-                setSidebarOpen(
-                  !sidebarOpen
-                )
-              }
-            >
-
-              <FaBars/>
-
-            </button>
-
-            <div className="search">
-
-              <FaSearch/>
-
-              <input
-                placeholder="Search..."
-              />
-
-            </div>
-
-            <button
-          type="button"
-          className="create"
-          onClick={(e) => {
-          e.preventDefault();
-
-          setOpenModal(true);
-          }}
-          >
-
-          <FaPlus />
-
-           Create
-
-          </button>
-
-          </header>
 
           <div className="dashboard-content">
 
