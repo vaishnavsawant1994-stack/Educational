@@ -1,16 +1,38 @@
-# React + Vite
+# Educational — Teacher SaaS Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project overview
 
-Currently, two official plugins are available:
+A frontend prototype for teachers to manage students, classes, learning materials, MCQ questions, tests, results, reports, calendars, messages, notifications, and settings.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What it contains
 
-## React Compiler
+- React 19 and Vite application
+- Teacher dashboard and sidebar navigation
+- Profile screen
+- Dashboard statistics and recent-activity interface
+- Pages/menu destinations for common teaching workflows
+- Responsive styling and React Icons
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Current status
 
-## Expanding the ESLint configuration
+The inspected repository is primarily a frontend experience. Some dashboard data is representative/static, and no separate backend or database service is defined at the repository root. Authentication, persistence, multi-user authorization, and real classroom workflows should therefore be treated as unverified or future work.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The npm package is named `clarivoo`, while the current UI uses “Teacher SaaS.” The final product name should be chosen and applied consistently. The default branch is `sanjana-code`.
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Before release:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Recommended next work
+
+Freeze the product name and user roles, define the backend/data model, replace sample data with authorized persistence, add authentication and tests, and document why `sanjana-code` is the default branch.
